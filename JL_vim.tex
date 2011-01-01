@@ -1,0 +1,711 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[polish]{babel}
+\usepackage[T1]{polski}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\selectlanguage{polish}
+\usepackage{times}
+\usepackage{graphicx} 
+\usepackage{eso-pic}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    pdfauthor={Marcin Karpezo},
+    pdftitle={Use Vim Like A Pro},
+    urlcolor=blue
+}
+\title{Używaj VIM-a jak profesjonalista}
+\author{Tim Ottinger}
+\date{15 grudnia 2010}
+\newcommand{\linia}{\rule{\linewidth}{0.4mm}}
+\begin{document}
+\pagestyle{empty}
+\noindent
+\linia \\ \\
+{\Huge Używaj VIM-a jak profesjonalista}\\
+\linia  
+\begin{flushright}
+Tim Ottinger
+\end{flushright}
+\newpage
+\noindent
+Tytuł oryginału: \href{http://tottinge.blogsome.com/use-vim-like-a-pro}{Use Vim Like A Pro}\\
+Tłumaczenie: Michał Bielawski \\
+Korekta/skład: Adrian Bogdanowicz, Katarzyna Świderska, Marcin Karpezo\\ 
+\href{http://jakilinux.org}{JakiLinux}\\ \\
+Wersja: 1.0\newpage
+\pagestyle{plain}
+\setcounter{page}{3} 
+\tableofcontents \newpage
+\section{Wstęp}
+
+Jest wiele edytorów tekstu. Niektóre z nich są bez wątpienia świetne i nic nie stoi na przeszkodzie, żebyś ich używał. Jednakże są pewne powody, dla których warto używać właśnie VIM-a. Nawet pomimo tego, że powody te nie są unikalnymi cechami tegoż edytora.
+\begin{itemize}
+    \item Dzięki wzrostowi zainteresowania platformami Uniksowymi (głównie Linux i Mac OS X), VIM jest powszechnie używanym edytorem
+    \item VIM potrzebuje niewielkich ilości pamięci RAM i mocy procesora. Nawet średniej klasy komputer jest w stanie udźwignąć wiele instancji edytora jednocześnie
+    \item VIM ma wiele “supermocy”, które sprawiają, że edycja plików przebiega dużo sprawniej
+    \item VIM wytwarza wokół siebie aurę “geekowatości”
+    \item VIM ma bardzo aktywną społeczność użytkowników i deweloperów. Zawsze ją miał.
+\end{itemize}   
+
+\subsection{Po co w ogóle pisać ten poradnik? (czyli podejście)}
+
+Są inne bardzo dobre tutoriale i Google na pewno pomoże Ci w znalezieniu ich. Zapewne kolejny tutorial do VIM-a nie jest artykułem pierwszej potrzeby, ale ten jest wyjątkowy – bo mój.\\
+Przyjąłem nieco odmienne podejście niż inni autorzy. Uważam, że istnieje pewien sposób myślenia, który sprawia, że nauka VIM-a staje się dużo prostsza. Omawiam również nawyki, dzięki którym zaprzyjaźnisz się z tym edytorem. Szczerze mówiąc nie wiem, czy ktoś przedstawił to w ten sposób.\\
+Długo układałem (i układałem i układałem\ldots) ten tutorial tak, żeby materiał był w odpowiedniej kolejności. Cały czas stawiając sobie za cel napisanie tego poradnika tak, żeby czytelnik, po dobrnięciu do końca, umiał korzystać z VIM-a w jak najbardziej profesjonalny sposób. Prawdopodobnie lepiej niż niejeden ich bardziej doświadczony kolega.\\
+Doradzam cierpliwość i poleganie na pamięci długoterminowej, ale jednocześnie uważam, że ten poradnik to jeden z najszybszych sposobów na usprawnienie Twojej pracy z VIM-em, jak również całkiem niezły na naukę od zera. Pisałem ten poradnik dla raczej niecierpliwego programisty.\\
+Zdecydowałem, że nie chcę pisać i sprzedawać książki, ponieważ każdy powinien mieć możliwość używania VIM-a jak zawodowiec, w każdym miejscu i czasie, bez konieczności wnoszenia dodatkowych opłat.
+
+\subsection{Jak korzystać z tutoriala? (czyli instrukcja obsługi)}
+Traktuj każdy punkt poradnika jako osobną lekcję i poświęć chwilę czasu na wypróbowanie danych komend, zanim przejdziesz do następnej. Możesz poświęcić cały dzień na każdą lekcję, a może nawet kilka, jeżeli dany materiał okaże się wyjątkowo trudny do przyswojenia.\\
+Postaraj się przerabiać po kilka lekcji tygodniowo. Nie spiesz się. Nie przeciążaj swojego mózgu ucząc się ciągle nowych rzeczy, bo zapomnisz o tym, czego uczyłeś się prędzej. Tutorial ten będzie istniał tak długo, jak będziesz tego potrzebował. Możesz złapać oddech.\\
+Nie nauczysz się VIM-a nie używając go, więc powinieneś przygotować sobie jakieś pliki (najlepiej kod jakiegoś wolnodostępnego programu), na których będziesz pracował. Jeszcze lepiej, jeżeli używasz VIM-a w pracy. Pomocne może być również przerabianie tego “kursu” we dwie osoby, żebyście z partnerem mogli się nawzajem wspierać.
+\subsection{Co mogę z tym zrobić? (czyli licencja)}
+Praca ta jest udostępniona na zasadach \href{http://creativecommons.org/licenses/by/3.0/pl/}{licencji Creative Commons Attribution 3.0}. Kopiuj, dziel się, udostępnij na swojej stronie. Nie udawaj, że to Twój tekst i dodaj informację o autorze. W ramach uprzejmości – jeśli uznasz, że jest to warte zachodu – nie będę miał nic przeciwko poinformowaniu mnie o tym.
+\section{Tutorial (czyli część zasadnicza)}
+
+Nikt nie zna całego VIM-a. Jest tyle różnych poleceń, że wystarczy dla tysięcy istnień ludzkich, z których każde może używać VIM-a na swój własny sposób. Na szczęście nie musisz znać ich wszystkich. Wystarczy Ci tyle, ile potrzebujesz, żeby wykonać swoje zadanie.\\
+Z tego również powodu, przez cały czas używania VIM-a będziesz poznawał nowe sztuczki. Sekret polega na tym, żeby nie poprzestawać na jednym konkretnym (kiepskim) sposobie wykonania danej czynności.\\
+VIM ma uzupełnianie składni, historię operacji, skróty klawiszowe, personalizację ustawień klawiatury, makra i skrypty. Możesz go przemienić w {\bf swój} edytor, przystosowany do {\bf twojego} środowiska. Brzmi świetnie, ale pewnie ucieszysz się z faktu, że możesz być dużo wydajniejszy nawet bez dotykania tych zaawansowanych funkcji.\\
+Jak mówi {\it Bram Moolenaar} (główny autor VIM-a), najlepszym sposobem na naukę VIM-a jest używanie go i zadawanie pytań. Ten poradnik pełen jest pytań, o których mogłeś nawet nie pomyśleć, żeby je zadać. To najbardziej wartościowa rzecz, którą mogę Ci przekazać.\\
+VIM ma wbudowany tutorial. Możesz go wypróbować, zwłaszcza jeśli nie spodoba Ci się mój. Żeby z niego skorzystać, wystarczy wywołać polecenie vimtutor z poziomu wiersza poleceń Twojego systemu. Jest on bardzo przystępny i raczej kompletny (w przeciwieństwie do mojego, który jest raczej przyjemny, ale na pewno nie kompletny).\\
+Proponuję również rozważyć GVIM-a. Sprawi on, że będzie Ci się pracować dużo przyjemniej. Jeżeli masz pod ręką tylko VIM-a, to oczywiście nadal możesz korzystać z tego poradnika, ale GVIM wygląda dużo lepiej, pozwala na używanie myszy i ma menu oraz ikony dla tych z Was, którzy przywykli do takich rzeczy.
+\subsection{Tryby pracy}
+Oryginalny VI powstał w czasach, gdy czarno-zielone ekrany były szczytem osiągnięć techniki (zapytaj dziadka o terminale ASCII). Nie było wtedy tak wielu klawiszy modyfikujących (shift, alt, ctrl, super, fn), jak również urządzeń wskazujących. Przyjmijmy, że mieliśmy do dyspozycji tylko klawisze shift i ctrl (nawet jeśli to nieprawda).\\
+Programując (tak jak i robiąc cokolwiek innego na komputerze) mieliśmy oczy cały czas skierowane na ekran, a dłonie położone na klawiaturze. VI sprawił, że pisanie programów odbywało się {\bf szybko}, ponieważ VI jest trochę jak gra komputerowa, w której każde naciśnięcia klawisza sprawia, że coś się dzieje.\\
+Jeżeli używasz vima i wciskanie klawiszy sprawia, że dzieją się albo rzeczy cudowne, albo straszne, to wiesz, że jesteś w trybie komend, który jest domyślnym trybem edytora. Komendy są przypisane do zwykłych klawiszy takich jak {\tt o}, {\tt y} czy {\tt g}, zamiast kombinacji w stylu {\tt Ctrl+Alt+Shift+Esc}.\\
+VIM jest wyposażony w kombinacje klawiszy pozwalające wykorzystać specjalne moce, takie jak nawigacja między funkcjami w oddzielnych plikach, poprawianie formatowania całych list w samym środku dokumentu, uzupełnianie składni, skróty, szablony i inne takie, ale o tym później.\\
+Musi istnieć również sposób na wprowadzanie tekstu, ale większość klawiszy ma już przypisane magiczne funkcje! Jedynym sensownym rozwiązaniem było stworzenie “trybu wprowadzania”, dzięki któremu wciśnięcie klawisza a sprawi, że w tekście pojawi się litera a. Zupełnie jak na maszynie do pisania (spytaj ojca co to). Nazywamy to “trybem wprowadzania”. Niewiele się w tym trybie dzieje, poza zwykły, starym, nudnym pisaniem. Powinieneś używać tego trybu tylko jeżeli chcesz coś napisać, bo fajne rzeczy dzieją się tylko w trybie zwykłym (komend).\\
+Poznasz wiele wygodnych sposobów na przejście w tryb wprowadzania, ale na chwilę obecną powinieneś wiedzieć, że aby ten tryb opuścić i powrócić do trybu gry zręcznościowej, należy wcisnąć klawisz {\tt Escape}.
+Gdy zrozumiesz, że w VIM-ie istnieją dwa zasadnicze tryby pracy, twoja praca z nim przestanie wprawiać Cię w zakłopotanie i otworzy się przed Tobą droga do zostania guru tego edytora.
+\subsection{Poznaj schemat komend VIM-a}
+Przez większość czasu albo będziesz uzyskiwał rezultaty po pojedynczym wciśnięciu klawisza, albo będziesz wprowadzał komendy kończąc je komendą ruchu (często również powtarzając te same naciśnięcia: tzw. “podwójny skok”). Kiedy rozpoczniesz naukę innych rzeczy (rejestry, powtórzenia itd.) może Ci się wydać, że VIM nie jest spójny, ale tak nie jest. Schemat komend jest raczej spójny. Po prostu niektóre jego części są opcjonalne.\\
+
+      {\bf Rejestr} (opcjonalnie, domyślnie rejestr {\tt “})
+      
+      {\bf Powtórzenia} (opcjonalnie): np. 13
+      
+      {\bf Operacja}: {\tt y} (Od angielskiego {\it yank} – {\it szarpać}. Możemy to rozumieć jako {\it wyszarpnięcie} tekstu)
+      
+      {\bf Przesunięcie} (w zależności od operacji): {\tt yy} ({\it podwójny skok}, żeby wykonać operację na aktualnym wierszu, konwencja używana w VI) \\
+
+\noindent      
+Komendy VIM-a działają zgodnie z powyższym schematem. Są komendy, które nie używają rejestrów i takie, które nie przyjmują polecenia przesunięcia, ale w większości przypadków tak to właśnie wygląda.\\
+{\bf Rejestr} to w zasadzie po prostu schowek (dla operacji typu kopiuj/wklej). Większość edytorów udostępnia tylko jeden taki schowek. W VIM-ie masz ich aż nadto, ale nie musisz ich wszystkich używać, więc się nimi nie przejmuj aż nie dotrzesz do lekcji o rejestrach.\\
+{\bf Powtórzenia} to liczba oznaczająca ile razy chcesz daną operację wykonać. Jeżeli nie podasz żadnej liczby, domyślną wartością jest 1.\\
+{\bf Operacja} to klawisz, który rozkazuje VIM-owi coś zrobić. Najczęściej są to zwykłe naciśnięcia klawiszy i większość z nim nie wymaga klawiszy modyfikujących jak {\tt Shift}, {\tt Ctrl} czy {\tt Alt}.\\
+{\bf Przesunięcie} to polecenie oznaczające ruch kursora. Jest ich całkiem sporo, ponieważ jest wiele sposobów na poruszanie się. Nie panikuj jednak – na początku możesz używać klawiszy strzałek, jeżeli koniecznie musisz. Poświęciłem w tym poradniku całą sekcję na polecenia przesunięcia.\\
+Spróbujmy wyjaśnić jak taki schemat działa. Jeżeli chcę skopiować 13 wierszy do mojego domyślnego rejestru, mogę pominąć rejestr, wpisać 13 jako liczbę powtórzeń, wcisnąć {\tt y} jako komendę kopiowania i potem jeszcze raz {\tt y} jako komendę ruchu (co oznacza aktualny wiersz). Takie polecenie ({\tt 13yy}) skopiuje 13 wierszy do domyślnego rejestru, poczynając od aktualnego. Jeżeli nacisnę teraz {\tt p} (nie precyzując rejestru, pomijając liczbę powtórzeń i wiedząc, że komenda {\tt put} nie przyjmuje polecenia ruchu), to te wiersze zostaną wklejone zaraz za bieżącym.\\
+Znając ten schemat będziesz mógł wpływać na wszystko, czego się nauczysz o VIM-ie. Naucz się wszystkich sposobów poruszania się, a będziesz wiedział jak wycinać, wklejać, poprawiać formatowanie, zmieniać poziom wcięcia i wiele innych rzeczy, które chciałbyś zrobić.
+\subsection{WYJDŹ!}
+
+Po tym jak uruchomisz sesję VIM, pewnie chciałbyś z niej kiedyś wyjść. Jest na to kilka sposobów. Spróbuj tych:
+
+\begin{tabular}{ l | p{9cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt :q} & \small{Zamyka aktualne okno (lub edytor, jeżeli to jest jedyne), jeżeli nie ma w nim niezapisanych zmian} \\ 
+{\tt :q!} & Zamyka aktualne okno, nawet jeżeli były w nim niezapisane zmiany \\ 
+{\tt :qa} & Zamyka wszystkie okna, jeżeli nie ma w nich niezapisanych zmian \\ 
+{\tt :qa!} & Zamyka wszystkie okna, nawet jeżeli były w nich niezapisane zmiany \\ 
+{\tt :wq} lub {\tt :x} lub {\tt ZZ} & Zapisuje zmiany i zamyka aktualne okno \\ \hline
+\end{tabular}\\
+
+\noindent
+Kiedy wciśniesz dwukropek, kursor przeniesie się do lewego dolnego rogu ekranu. Później dowiesz się dlaczego. Na razie wystarczy, że będziesz wiedział, że tak powinno się dziać, a te polecenia działają. Zauważ, że przed {\tt ZZ} nie ma dwukropka.\\
+{\it Od tłumacza: Po poleceniach rozpoczynających się dwukropkiem należy wcisnąć klawisz \textit{\texttt{Enter}}, inaczej nie odniosą one skutku.}\\
+Jeżeli nie możesz sobie poradzić z wyjściem z VIM-a, upewnij się, że Caps-Lock jest wyłączony i wciśnij Escape. Jeśli sprawi Ci to radość, możesz go nacisnąć kilkukrotnie. Jeżeli usłyszysz brzęczyk, będziesz wiedział, że wcisnąłeś go wystarczającą liczbę razy. Wtedy podane wyżej polecenia na pewno zadziałają.
+\subsection{Mnemonika}
+
+Nie wszystkie komendy są łatwe do zapamiętania. Twórcy VIM-a bardzo się starali, ale łatwo jest znaleźć więcej niż 26 czynności, które chciałbyś wykonywać korzystając z edytora, a poza tym tak się dziwnie składa, że niewiele jest słów zaczynających się na literę {\it q} i mających jakiś sens w programie do edycji tekstu. Jednakże wiele komend da się łatwo zapamiętać. Są to komendy do odnajdywania najbliższego znaku (ang. {\it Find} – {\tt f}), przesunięcia o jedno słowo do tyłu ({\it Back one word} – {\tt b}) lub do przodu ({\it Word} – {\tt w}) itd.\\
+Wiele poleceń jest mnemonicznych, pod warunkiem, że znasz żargon. Przykładowo: ponieważ zarówno {\it copy} (kopiuj) jak i {\it cut} (wytnij) zaczynają się na {\it c}, używamy slangowych {\it yank} (wyszarpnij – jako kopiuj), {\it delete} (usuń – jako wytnij) i {\it put} (połóż – jako wklej). {\tt Y}, {\tt D}, {\tt P}. Może się to wydawać nieco dziwne, ale da się to zapamiętać. Pamiętaj, że z czasem przechodzi to do pamięci mięśniowej, ale autorzy VI i VIM-a starali się nie być całkowicie abstrakcyjni, gdy wszystko leżało w ich gestii. Czasem nie mieli jednak wielkiego wyboru.
+\subsection{Wywołanie}
+Gdy już wiesz jak wyjść z VIM-a, pora się nauczyć jak się do niego wejść. Zazwyczaj uruchamiamy VIM-a z wiersza poleceń, aczkolwiek całkiem możliwe, że masz do dyspozycji jakieś menu bądź inne sposoby na uruchamianie programów.\\
+Jest kilka sposobów na uruchomienie VIM-a:
+
+\begin{tabular}{ l | p{5,4cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt vim} & Uruchomienie z pustym oknem \\
+{\tt vim plik.txt} & Uruchomienie z załadowanym i gotowym do edycji plikiem plik.txt \\
+{\tt vim +N plik.txt} & Uruchomienie z załadowanym i gotowym do edycji plikiem plik.txt; rozpoczyna edycję w linii N \\
+{\tt vimtutor} & Uruchomienie w trybie samouczka -- całkiem niezły pomysł \\
+{\tt vimdiff plik1.txt plik2.txt} & Uruchomienie w trybie porównywania i łączenia dwóch plików \\
+{\tt vim .} & Uruchomienie w trybie przeglądarki plików \\ \hline
+\end{tabular}\\
+
+\noindent
+Oprócz tych wymienionych powyżej, jest jeszcze więcej. Na początek te powinny jednak wystarczyć. Wypróbuj {\tt vimdiff} i {\tt vimtutor}. Niektóre ze sposobów uruchamiania nie zadziałają dopóki nie skonfigurujesz swojego {\it .vimrc}, ale o tym później.\\
+Jeżeli zamiast {\tt vim} napiszesz {\tt gvim}, to uruchomi się wybajerzona wersja graficzna VIM-a (oczywiście zakładając, że jest zainstalowana). Ma ona kilka dodatkowych możliwości. Zapewne spodoba Ci się bardziej niż czysty VIM, bo jest ona jak VIM z polewą czekoladową. Wszystko, co mówimy tutaj o VIM-ie działa również w gVIM-ie, więc możesz bez obaw używać tego tutoriala.\\
+Nie jesteś skazany na edycję tylko jednego pliku jednocześnie. Możesz uruchomić (g)VIM-a z wieloma nazwami plików jako argumentami. Jeżeli tak zrobisz, to jest kilka parametrów, dzięki którym możesz uzyskać ciekawe efekty. Oczywiście ciekawsze będą jak nauczysz się obsługiwać podzielone okna, więc pewnie będziesz chciał zajrzeć do nich później.
+
+\begin{tabular}{ l | p{8,4cm} }
+{\bf Parametr} & {\bf Rezultat} \\ \hline
+{\tt -o} (mała litera “o”) & Otwiera wiele plików w oknach ułożonych w poziomie \\
+{\tt -O} (wielka litera “O”) & Otwiera wiele plików w oknach ułożonych w pionie \\
+{\tt -p} & Otwiera wiele plików w osobnych kartach. (Osobiście nie cierpię tego) \\ \hline
+\end{tabular}
+
+\subsection{Kontekst jest ważniejszy niż pozycja}
+Biedna duszyczka, używająca VIM-a po raz pierwszy będzie wciskać klawisze strzałek, poruszając się w kodzie strasznie nieefektywnie. Będzie przewijać ekran o całą stronę w górę i w dół (przy okazji: to odpowiednio {\tt \^f} i {\tt \^b}) i przeczesywać kod swoimi zmęczonymi oczami. Ta biedna osoba jest powolna, jeszcze nie uświadomiona i zapewne bierze VIM-a za kiepską wersję windowsowego notatnika, zamiast za potężne narzędzie jakim jest.\\
+Przy okazji -- klawisze strzałek nie zawsze działają w VIM-ie. Nie obarczaj jednak winą za to VIM-a! Tak naprawdę jest to sposób w jaki Twój terminal obsługuje te klawisze. Przez to VIM nie potrafi rozpoznać, że Twoje strzałki to strzałki. Jeżeli masz ten problem, będziesz musiał poszukać rozwiązania na własną rękę.\\
+Żeby używać VIM-a porządnie, musisz się najpierw nauczyć porządnie poruszać.\\
+Nie przewijaj w poszukiwaniu tekstu. Nie używaj do tego swoich oczu. Nie wiem czy zauważyłeś, ale od jakiegoś czasu komputery robią to za nas. Masz tutaj garść najważniejszych poleceń ruchu. Najłatwiej jest się poruszać szukając:
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt /} & Wyszukaj do przodu; zostaniesz zapytany o wzór \\
+{\tt ?} & Wyszukaj do tyłu; zostaniesz zapytany o wzór \\
+{\tt n} & Powtórz ostatnie wyszukiwanie (tak jak kropka powtarza komendy) \\
+{\tt N} & Powtórz ostatnie wyszukiwanie, w przeciwnym kierunku \\
+{\tt tx} & Przesuń do (ang. {\it to}) litery x, zatrzymując się tuż przed nią -- przydatne przy komendach usunięcia i zmiany \\
+{\tt fx} & Znajdź (ang. {\it find}) literę x, zatrzymując się na niej -- również przydatne przy komendach usunięcia i zmiany \\ \hline
+\end{tabular}\newpage
+
+\noindent
+Jeżeli szukanie zbytnio Ci nie pomoże, rozważ skoki:
+
+\begin{tabular}{ l | p{9,9cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt gg} & Początek pliku \\
+{\tt G} & Koniec pliku \\
+{\tt 0} (cyfra zero) & Początek wiersza \\
+{\tt w} & Jedno słowo do przodu \\
+{\tt W} & Następne słowo rozdzielone spacjami (pomija znaki specjalne) \\
+{\tt b} & Jedno słowo do tyłu \\
+{\tt B} & Poprzednie słowo rozdzielone spacjami (pomija znaki specjalne) \\
+{\tt e} & Koniec aktualnego słowa, lub następnego, jeżeli już jesteśmy na końcu \\
+{\tt E} & Koniec aktualnego słowa rozdzielonego spacjami (pomija znaki specjalne) \\ \hline
+\end{tabular}\\
+
+\noindent
+Poniższe komendy są bardzo przydatne, a przy okazji łatwe do zapamiętania, jeżeli znasz wyrażenia regularne:
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt \^{}} & Początek tekstu w danej linii -  zdecydowanie lepsze niż korzystanie z klawiszy strzałek bądź komendy {\tt h} \\
+{\tt \$} & Koniec tekstu w danej linii. Zdecydowanie lepsze niż korzystanie z klawiszy strzałek bądź komendy {\tt l} \\ \hline
+\end{tabular}\\
+
+\noindent
+Kilka ciekawszych komend:
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt \%} & Odpowiadający nawias, klamra itp. \\
+{\tt \{} & Początek akapitu \\
+{\tt \}} & Koniec akapitu (najbliższa pusta linia) \\
+{\tt (} & Początek zdania (zdania są oddzielone kropką i spacją) \\
+{\tt )} & Koniec zdania \\
+{\tt \"{}} & Miejsce ostatniej zmiany w aktualnym wierszu \\
+{\tt ]]} & Następna funkcja/klasa (C, Java, C++, Python) \\
+{\tt [[} & Poprzednia funkcja/klasa (C, Java, C++, Python) \\ \hline
+\end{tabular}\newpage
+
+\noindent
+Ostatecznie, jeżeli nie jesteś w stanie wykorzystać wyszukiwania, skoków itd., nadal możesz korzystać z klawiatury, więc odłóż mysz na bok: 
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt h} & W lewo o jeden znak \\
+{\tt l} & W prawo o jeden znak \\
+{\tt k} & W górę o jeden wiersz \\
+{\tt j} & W dół o jeden wiersz \\
+{\tt \^{}f} & W dół o jeden ekran \\
+{\tt \^{}b} & W górę o jeden ekran \\ \hline
+\end{tabular}\\
+
+\noindent
+Dobrym pomysłem jest ustawienie opcji {\tt hls} ({\it highlight search} – podświetlaj wyszukiwane) w pliku .vimrc. Niedługo się dowiesz jak to zrobić. Tymczasowo możesz wpisać {\tt :set hls} i wcisnąć {\tt Enter}.
+\subsection{Cytowanie metaznaków w wyrażeniach regularnych}
+Jeżeli nie wiesz czym są wyrażenia regularne, pomiń tę sekcję. Dla tych, który wiedzą i zdają sobie sprawę z tego, że komenda {\tt /} przyjmuje wyrażenie regularne, a nie tylko zwykły tekst, będzie ona ważna. W pozostałych przypadkach wyda się pewnie kompletnie nie na miejscu i powinna zostać pominięta.\\
+Powinieneś wiedzieć jak używać regeksów, bo kilka sztuczek z ich wykorzystaniem może sprawić, że będzie Ci się lepiej korzystało z Uniksa/Linuksa/Maca. Jest to zbyt rozległy temat, żeby go tutaj przedstawiać, ale możesz zerknąć na któryś ze świetnych tutoriali czy referencji dostępnych w sieci.\\
+Najważniejszą sprawą do zapamiętania jest to, że VIM stawia na wygodę jeżeli chodzi o wyrażenia regularne. Ponieważ często szukasz, VIM zakłada, że wpisując {\tt /+} chcesz znaleźć najbliższy znak +. W wyniku tego założenia wszystkie metaznaki muszą być poprzedzone wstecznym ukośnikiem ({\tt $\backslash$}). Czasem jest to problematyczne, ale jeżeli naprawdę chcesz znaleźć nawias poprzedzony plusem, jest to znaczne ułatwienie.
+\subsection{Nie panikuj, masz historię poleceń}
+Komendą cofającą zmiany jest {\tt u} (ang. {\it undo}). Niezbyt trudne do zapamiętania, prawda? Jak już prędzej wspomniałem, wiele poleceń VIM-a jest mnemonicznych.\\
+Komendą powtórzenie cofniętych zmian powinna być litera {\tt r} (ang. {\it repeat}), ale jest już zajęta przez polecenie zamiany ({\it replace}); powiemy o tym nieco później. Pozostaje nam {\tt Ctrl-R} ({\tt \^{}r}). Cóż\ldots nie można mieć wszystkiego.\\
+Jest jeszcze troche odnośnie cofania i powtarzania, ale na razie tyle powinno wystarczyć. Ciesz się, że już możesz cofać i potwarzać zmiany. VIM nie jest już taki nieudolny i niewybaczający, jak mogło Ci się wydawać, chociaż wciąż nie musisz go lubić. Poczekaj tylko, aż do gry wejdzie pamięć mięśniowa.\\
+Jeżeli narobisz naprawdę niezłego bałaganu, to po prostu wyłącz edytor bez zapisywania ({\tt :qa!}).\\
+Jeżeli bardzo się obawiasz o swoje pliki, albo jesteś po prostu bardzo ostrożny, powinieneś używać jakiegoś systemu kontroli wersji. Zalecam, żebyś tak czy siak zaczynał naukę na bezwartościowych plikach, w jakimś tymczasowym katalogu, ale gdy przejdziesz do prawdziwej pracy, nie powinieneś się obawiać wprowadzania zmian. Kontrola wersji jest dobrym zabezpieczeniem i może być z powodzeniem stosowana jako sposób na kopie bezpieczeństwa. Proponuję rozważyć \href{http://git-scm.com/}{Gita} i \href{http://mercurial.selenic.com/}{Mercuriala} -- oba są jednocześnie proste i potężne.
+\subsection{Wielkie litery i ŚMIERĆ PRZEZ CAPSLOCK}
+W przypadku wielu poleceń {\tt Shift} albo odwraca kierunek ({\tt N} jest przeciwieństwem {\tt n}; zobacz: następny punkt), albo całkowicie zmienia sposób działania. Poruszając się do przodu o jedno słowo ({\tt w}) można wcisnąć {\tt W}, żeby nadal przesuwać się o jedno słowo, ale traktując znaki specjalne jako jego część. To samo tyczy się przeciwnego kierunku – {\tt b} i {\tt B}.\\
+Ponieważ jednak wielkie litery mogą mieć zupełnie inne znaczenie niż ich małe odpowiedniki, powinieneś uważać, żeby nie wcisnąć klawisza {\tt CapsLock}! Czasem zdarzy się, że przez przypadek wciśniesz {\tt CapsLock} i gdy będziesz chciał przejść do kolejnego wiersza ({\tt j}), połączysz go z obecnym. Wiele innych niepożądanych zmian może się zdarzyć w takiej sytuacji, jeżeli Twoje palce będą szybko przemierzać klawiaturę w celu wykonania jakiegoś skomplikowanego ciągu komend. To okropne.\\
+Kiedy spotka Cię ŚMIERĆ PRZEZ CAPSLOCK, powinieneś od razu go wyłączyć i wciskać {\tt u} tak długo, aż cofniesz niechciane zmiany. Jeżeli uważasz jednak, że to gra nie warta świeczki, wpisz po prostu {\tt :e!} i zatwierdź enterem, a VIM wczyta plik ponownie z dysku. Trochę to kłopotliwe, ale na pewno kiedyś Ci się to zdarzy, więc warto, żebyś o tym wiedział. Niektórzy z tego powodu wyłączają {\tt CapsLock} na stałe.
+\subsection{Wstaw, nadpisz, zmień}
+W VIM-ie jest kilka różnych sposobów na rozpoczęcie wprowadzania tekstu, jak już zostało wspomniane w sekcji {\it Tryby pracy}.\\
+Twoim standardowym trybem pracy powinien być tryb komend. Po wciśnięciu niektórych klawiszy przechodzisz w tryb wstawiania lub nadpisywania. W trybie wstawiania, wszystko co piszesz zostaje wstawione w miejsce kursora, a to co było za nim jest spychane do prawej bądź do kolejnego wiersza.\\
+Z kolei w trybie nadpisywania, wszystkie naciśnięcia klawiszy są wpisywane podobnie jak w trybie wstawiania, z tym wyjątkiem, że tekst za kursorem zamiast zostać odepchniętym, jest zastępowany przez kolejne wpisywane znaki. Aby przejść do tego trybu, musisz wydać odpowiednie polecenie w trybie komend.\\
+W trybie wykonywania (ang. {\it ex mode}) wpisujesz łańcuch znaków w pole u dołu ekranu. Przejdziemy do tego później, bo jest to potężna rzecz. Jest też nieco zawiła, więc poczekamy z nią trochę. Do tego trybu przechodzisz wciskając {\tt :} w trybie komend.\\
+Z każdego tych trybów możesz powrócić do trybu normalnego (komend) wciskając Escape. Bardzo przydatny klawisz.
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt i} & Rozpocznij pisanie w miejscu kursora \\
+{\tt I} & Rozpocznij pisanie na początku wiersza. Zdecydowanie lepsze niż wciskanie \^{}, a następnie {\tt i} \\
+{\tt a} & Rozpocznij pisanie za kursorem \\
+{\tt A} & Rozpocznij pisanie na końcu wiersza. Zdecydowanie lepsze niż wciskanie $\backslash\$$, a następnie {\tt a} \\
+{\tt r} & Zamień pojedynczy znak w miejscu kursora \\
+{\tt R} & Przejdź do trybu nadpisywania, w którym niszczycielsko nadpisujesz wszystko, aż do naciśnięcia {\tt Escape} \\
+{\tt s} & Zamień pojedynczy znak w miejscu kursora i przejdź do trybu wstawiania \\
+{\tt c} & Komenda zastąpienia. Wymaga komendy przesunięcia następującej po niej. Najczęściej używam {\tt cw} i {\tt cc} \\
+{\tt C} & Jak {\tt c}, ale stosowane do całej linii \\
+{\tt o} & Wstawia pustą linię pod bieżącą \\
+{\tt O} & Wstawia pustą linię nad bieżącą \\
+{\tt :} & Przejdź w tryb wykonywania poleceń (dla zaawansowanych uczniów) \\
+{\tt !} & Przejdź w tryb filtrowania przy pomocy powłoki systemowej (dla bardzo zaawansowanych uczniów) \\ \hline
+\end{tabular}\\
+
+\noindent
+Zastanów się przez chwilę nad wagą komendy {\tt c}. Jeżeli użyjesz jej w połączeniu z {\tt t} lub {\tt f}, staje się ona naprawdę potężnym narzędziem. Gdybyś miał kursor na literze {\it Z} na początku tego akapitu, mógłbyś wykonać komendę {\tt ct.}, żeby przepisać całe zdanie, zachowując kropkę. To samo tyczy się innych, jak na przykład {\tt d} do usuwania. Polecenia ruchu znacząco zwiększają możliwości komendy {\tt c} i dlatego tak ważne jest, abyś je dobrze znał.
+\subsection{NIE POZOSTAWAJ W TRYBIE WSTAWIANIA}
+VIM jest stworzony do tego, żeby więcej się przemieszczać po tekście, niż edytować. Nagradza Cię za dostosowanie się do takiego trybu pracy – głównie tryb komend, z krótkimi przerwami na wprowadzanie. \\
+Jeżeli będziesz próbował używać VIM-a jako kiepskiego zamiennika notatnika, tryby i nawigacja sprawią, że nigdy nie będziesz wydajny. Jak chcesz żeglować, musisz wsiąść do łódki. Jak chcesz efektywnie korzystać z VIM-a, musisz zaprzyjaźnić się z trybem komend.\\
+Jeśli więc zatrzymujesz się, żeby nad czymś pomyśleć, wciśnij {\tt Escape}. Jeżeli nie jesteś w trakcie pisania, powinieneś być w trybie komend. Jak chcesz przejsć do następnej linijki czy w jakiekolwiek inne miejsce w pliku, wciśnij {\tt Escape}. Jak chcesz odejść od klawiatury, wciśnij {\tt Escape}. W przeciwnym wypadku, zaczniesz wprowadzać komendy i zanim zorientujesz się, że nie jesteś w trybie komend, stracisz możliwość sensownego używania {\tt .} czy cofania. Natomiast kiedy chcesz w trakcie pisania wydać jedno polecenie możesz zrobić to przez wciśnięcie kombinacji {\tt Ctrl+o}. Vim po wykonaniu go automatycznie powróci do trybu wstawiania.
+\subsection{Dobry .vimrc to szczęście}
+Kiedy uruchamiasz VIM-a, ten najpierw wczytuje Twoje ustawienia, zanim zacznie robić cokolwiek interesującego. Możesz edytować plik .vimrc w swoim katalogu domowym. Dotychczasowe lekcje dostarczyły Ci wystarczającej ilości informacji, żebyś był w stanie zmodyfikować .vimrc i dodać do niego poniższe komendy. Zabawa polega na tym, żebyś wprowadził komendy z lewej kolumny tabeli. Będziesz musiał je przepisać i poprawić ewentualne literówki. Kiedy już to zrobisz, zapiszesz plik i wyjdziesz z VIM-a, a gdy następnym razem go uruchomisz, Twoje ustawienia zostaną wczytane. Możesz edytować ten plik w dowolnej chwili.\\
+W VIM-ie jest nieco wyrafinowanej magii. Często jednak zdarza się, że ta magia jest domyślnie wyłączona w dystrybucji. {\it Brakuje} uzupełniania składni wiersza poleceń, kolorowania składni, przeglądarki plików i wielu innych elementów, dopóki nie włączysz ich w swoim .vimrc.\\
+Istnieje bardzo przyjemny przewodnik po ustawieniach VIM-a, a nawet interfejs do łatwego włączania i wyłączania poszczególnych opcji. Zdaje się, że nie jest to zbyt powszechna wiedza, bo dowiedziałem się o tym dopiero w tym roku. Chciałbym wiedzieć o tym od samego początku\ldots
+
+{\tt :options}
+
+{\tt :browse options}
+
+{\tt :browse}
+
+\noindent
+W oknie tym możesz przeglądać wszystkie dostępne opcje, a nawet zmieniać je. Możesz przeczytać krótki opis przypisany do każdej opcji, albo wcisnąć na nim {\tt Enter} i przeczytać dokładniejszy opis. Jeżeli wciśniesz {\tt Enter} na którejś z opcji, zostanie ona przełączona lub jej wartość zostanie zmieniona.\\
+Każda z poniższych komend ma również wersję skróconą, ale te możesz poznać później. Na początek spróbuj wprowadzić pierwsze pięć komend (każdą w osobnej linii), zapisz plik i otwórz go ponownie, aby dodać kolejne. Zauważysz, że druga sesja będzie miała włączone kolorowanie składni i będzie wyświetlać dodatkowe informacje.
+
+\noindent
+\begin{tabular}{ p{4,9cm} | p{8cm} }
+{\bf Komenda w .vimrc} & {\bf Znaczenie} \\ \hline
+{\tt syntax enable} & Włącza magię. Włączając w to przeglądarkę plików i kolorowanie składni \\
+{\tt set showmode} & Pokazuje kiedy jesteś w trybie wprowadzania/nadpisywania \\
+{\tt set showcmd} & Kiedy komenda się wykonuje, pokazuj ją w pasku stanu \\
+{\tt set wildmenu} & Włącza magię dla uzupełniania poleceń w trybie wykonywania \\
+{\tt set ruler} & Włącza {\it liniał} (informacje o stanie edytora) u dołu ekranu \\
+{\tt runtime ftplugin/man.vim} & Włączę obsługę stron man (wpisz {\tt :Man <temat>}) \\
+{\tt set autoindent} & Dodawaj wcięcia inteligentnie, zamiast cały czas powracać do samego początku wiersza \\
+{\tt set expandtab} & Zamieniaj znak tabulacji na ciąg spacji \\
+{\tt set nowrap} & Nie zawijaj tekstu (sprawia, że okna wyglądają brzydko) \\
+{\tt set hlsearch} & Podświetlaj wszystkie wyniki wyszukiwania \\
+{\tt set showmatch} & Podświetlaj odpowiadające nawiasy, klamry itd. \\
+{\tt set ignorecase} & Ignoruj wielkość znaków przy wyszukiwaniu \\
+{\tt set smartcase} & Jeżeli wyszukiwana fraza zawiera wielkie litery, przestań ignorować wielkość znaków \\
+{\tt set path=., .., /usr/include/*, /usr/share/*} & Wskaż ścieżki, w których VIM ma szukać plików \\
+{\tt set spelllang=pl\_pl} & Kiedy chcę sprawdzania pisowni, to chcę jej w języku polskim\\ \hline
+\end{tabular}\\
+
+\subsection{Pomoc jest w drodze}
+VIM jest wyposażony w mechanizm pomocy. Powinieneś wiedzieć jak z niego korzystać.\\
+Wpisz {\tt :help}, a otworzy się nowe okno z treścią pomocy. Możesz się po nim poruszać przy pomocy klawiszy strzałek lub dowolnych komend ruchu, które poznałeś.\\
+Zawsze możesz wprowadzać {\it dziwne} klawisze wciskając najpierw {\tt \^{}v}, a następnie ten klawisz. Jest to najbardziej przydatne właśnie w przypadku pomocy. Możesz wpisać {\tt :help \^{}v\^{}t} ({\tt Ctrl+v}, {\tt Ctrl+t}), by uzyskać pomoc na temat komendy {\tt \^{}t}. Zgodnie z konwencją, możesz uzyskać ten sam rezultat wpisując {\tt :help CTRL-T}. To naprawdę ważna rzecz.\\
+Większość dystrybucji VIM-a dostarcza program {\tt vimtutor}. Program ten nauczy Cię jak używać VIM-a\ldots przy pomocy VIM-a. Całkiem przydatne narzędzie (brawa dla autora!).\\
+System pomocy jest wyposażony w linki. Jeżeli się na jakiś natkniesz, możesz przesunąć do niego kursor (tylko nie waż się korzystać ze strzałek!) i wcisnąć {\tt \^{}]} ({\tt Ctrl+]}). Tak, to dziwna i dość abstrakcyjna kombinacja klawiszy. Nie tylko przeniesie Cię do miejsca wskazywanego przez link, ale też umieści Twoją aktualną pozycję na stosie, pozwalając Ci do niej wrócić. Jeżeli będziesz chciał to uczyć, po prostu wciśnij {\tt \^{}t} (tak, kolejny abstrakcyjny skrót), aby zdjąć aktualny link ze stosu i powrócić do poprzedniej pozycji. Komendy {\tt \^{}]} i {\tt \^{}t} nie są zbyt łatwe do zapamiętania, ale będziemy ich również używać do nawigacji w kodzie, więc nauczenie się ich nie będzie kompletną stratą energii.
+\subsection{Podwójny skok}
+Zgodnie z przyjętą konwencją, wciśnięcie tego samego klawisza polecenia podwójnie, spowoduje, że zadziała on dla całego bieżącego wiersza. Jeżeli chcesz skopiować daną linię, wciśnij {\tt yy}. Jak chcesz ją usunąć, wciśnij {\tt dd}. Przepisać na nowo – {\tt cc}. Ta konwencja jest używana w całym VIM-ie, łącznie ze specjalnym przypadkiem pt. {\it zapisz i wyjdź} – {\tt ZZ}. Wykonywanie operacji na całym wierszu jest dość częste, więc sensownym było sprawienie, żeby było to wygodne.
+\subsection{Pozbywanie się zbędnych rzeczy}
+Możesz się pozbyć znaku pod kursorem wciskając {\tt x}. Jeśli chcesz go wcisnąć dziesięć razy, oszczędź sobie trudu i wpisz {\tt 10x}. Może to być przydatne, ale zapewne szybko się znudzisz albo liczeniem ile razy chcesz wykonać tę operację, albo przytrzymywaniem klawisza {\it x}. Ja bym się znudził.\\
+Zdecydowanie wygodniejszą komendą do usuwania tekstu jest {\tt d} (ang. {\it delete}). To jedna z komend łatwych do zapamiętania.\\
+{\tt d} przyjmuje polecenie ruchu. Powinieneś poznać kilka z nich w trakcie poprzednich lekcji. Podstawowym założeniem jest, że będziesz usuwał tekst od znaku pod kursorem do jakiegoś innego miejsca w pliku.\\
+Możesz usunąć bieżący wiersz, wciskając {\tt dd}, albo linię aktualną wraz z następną, wciskając {\tt dj}. W podobny sposób {\tt d\}} usunie tekst aż do końca akapitu, a {\tt dG} – do końca pliku. Możesz zauważyć, że wszystkie komendy, które przyjmują polecenie ruchu działają w ten sposób (włącznie z {\tt c}). Każda komenda ruchu, której się nauczysz, zwiększa Twoje umiejętności kopiowania, usuwania i poprawiania tekstu. Te dodatkowe moce są przyczyną, dla której powinieneś umieć się dobrze poruszać w VIM-ie.\\
+{\tt d} przyjmuje także licznik powtórzeń, więc jeśli wpiszesz {\tt 23dd}, usuniesz 23 wiersze, począwszy od bieżącego. To może się przydać.\\
+I w końcu – mamy do dyspozycji rejestry. Rejestr w VIM-ie jest jak schowek, którego używałeś w innych programach. Kiedy usuwasz tekst jest on zapisywany do rejestru, żebyś mógł go potem wkleić w innym miejscu, wciskając {\tt p} ({\it put} lub {\it paste}). Oczywiście możesz użyć innego rejestru niż domyślny. Definiuje się go przy pomocy cudzysłowu, po którym następuje nazwa rejestru (dowolna litera, z uwzględnieniem wielkości). Oznacza to, że możesz kopiować różne fragmenty tekstu przez {\it wyszarpywanie} ({\tt y} – {\it yank}) lub usuwanie, i przechowywać je w różnych rejestrach. Potem wystarczy, że wklejając wybierzesz odpowiedni rejestr.\\
+Wklejanie również używa rejestrów. Wygląda to wtedy tak: {\tt \"{}ap} (dla rejestru o nazwie {\it a}). Możesz nawet wkleić zawartość danego rejestru wielokrotnie, jeżeli użyjesz licznika powtórzeń (zerknij do lekcji o schemacie komend).\\
+Tak naprawdę masz więcej rejestrów niż wymieniłem i możesz z nimi robić również inne rzeczy, ale tyle powinno wystarczyć na szybką lekcję o usuwaniu.
+\subsection{Używaj kropki}
+Każda akcja edycji jest nagrywana. Powiedzmy, że właśnie usunąłeś wiersz (wciskając {\tt dd}). Edytor wie, że usunąłeś linię. Możesz powtórzyć akcję edycji (tj. usunąć kolejną linię) wciskając kropkę ({\tt .}). Możesz nawet zastosować standardowy wzór i wskazać rejestr oraz liczbę powtórzeń i dopiero wtedy wcisnąć kropkę (ona pamięta komendę i przesunięcie). Jest to szczególnie przydatne, gdy ostatnio wykonaną komendą było {\tt cw} – powtórzy operację zmiany na tekście pod kursorem.\\
+Ponieważ kropka powtarza ostatnią edycję, jest to jeden z najważniejszy klawiszy. Powinieneś nauczyć się na nim polegać. Jest to jedna z najlepszych rzeczy, jakie daje Ci VIM.
+\subsection{Używaj gwiazdki}
+Gwiazdka ({\it asterysk}, {\tt *}) jest świetną komendą, szczególnie jeżeli w swoim .vimrc masz włączoną opcję {\tt hlsearch}. Przeskakuje ona do kolejnego wystąpienia słowa, na którym masz kursor. Jednocześnie podświetla wszystkie wystąpienia danego słowa w tekście.
+
+\begin{tabular}{ l | p{10,5cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt *} & Przeskocz do następnego wystąpienia aktualnego słowa w tekście\\
+{\tt \#} & Przeskocz do poprzedniego wystąpienia aktualnego słowa w tekście \\ \hline
+\end{tabular}
+\subsection{Rejestry}
+Większość edytorów udostępnia pojedynczy schowek. Kiedy kopiujesz bądź wycinasz tekst, tracisz to, co w nim do tej pory było. W rezultacie skaczesz po pliku kopiując z jednego miejsca w drugie. Jeżeli masz szczęście, możesz podzielić okno na dwie części i skakać między nimi. Dostarcza to sporo ciężkiej, ręcznej pracy i ćwiczeń koordynacji wzrokowo-ruchowej, żeby znaleźć tekst, zaznaczyć, wyciąć, znaleźć miejsce i wreszcie wkleić tekst w drodze do nirwany.\\
+Najprawdopodobniej wystarczy kilka minut takiego przeklejania, żeby zrobiło Ci się niedobrze.\\
+VIM daje nam inne rozwiązanie tego problemu. Niestety, ma też inną terminologię. Zamiast buforów mamy rejestry. Ten sam pomysł, inna nazwa ({\it bufor} oznacza coś zupełnie innego w VIM-ie). Możesz znaleźć miejsce, z którego chcesz kopiować, skopiować lub wyciąć tekst do różnych rejestrów, przeskoczyć do miejsca docelowego i wkleić zawartość tychże rejestrów. To wszystko wymaga tylko jednego większego ruchu.\\
+Lista dostępnych rejestrów: (za dokumentacją VIM-a, dostępne przez {\tt :help registers})
+
+\begin{tabular}{ l | p{10,5cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt \"{}} & Domyślny rejestr \\
+{\tt a-z}, {\tt A-Z} & Małe i wielkie litery \\
+{\tt +} i {\tt *} & Rejestry zaznaczenia, powiązane ze schowkiem systemowym (pozwalają na kopiowanie tekstu z i do VIM-a) \\
+{\tt \_} & Czarna dziura - używany jeżeli nie chcemy nadpisać zawartości domyślnego rejestru \\ \hline
+\end{tabular}\\
+
+\noindent
+{\it Od tłumacza: W systemach z rodziny Windows rejestry \textit{\texttt{+}} i \textit{\texttt{*}} oznaczają to samo – schowek systemowy, natomiast w systemach korzystających z X11 odpowiednio – schowek (wklejanie zazwyczaj przez \textit{\texttt{ Ctrl+C}}) i bieżące zaznaczenie (wklejanie środkowym przyciskiem myszy).} \\
+Jest jeszcze kilka innych rejestrów specjalnego przeznaczenia, ale zostawiam je jako ciekawostkę, do doczytania w systemie pomocy. Są to takie rejestry jak rejestr {\it małych usunięć} czy rejestry numerowane. Naprawdę, nie musisz ich znać.\\
+Żeby rozróżnić rejestr {\tt y} od komendy {\tt y}, VIM wymaga, żebyś poprzedził nazwę rejestru znakiem cudzysłowu. Tak więc {\tt y} oznacza komendę, a {\tt \"{}y} – rejestr. Jeżeli wpiszesz {\tt \"{}y}, to VIM będzie oczekiwał na dokończenie wzoru, zapewne przez opcjonalną liczbę powtórzeń, komendę i polecenie ruchu (jeśli jest wymagane). Oto kilka przykładów o rosnącym stopniu skomplikowania:
+
+\begin{tabular}{ l | p{10,5cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt dd} & Wytnij bieżący wiersz do domyślnego rejestru \\
+{\tt \"{}add} & Wytnij bieżący wiersz do rejestru {\it a} \\
+{\tt \"{}y\$} &	Skopiuj tekst od kursora do końca wiersza, do rejestru {\it y} \\
+{\tt \"{}byy} & Skopiuj bieżący wiersz do rejestru {\it b} \\
+{\tt \"{}c24dd} & Wytnij 24 linie poczynając od bieżącej i wstaw je do rejestru {\it c} \\ \hline
+\end{tabular}\\
+
+\noindent
+Jestem przekonany, że {\tt \"{}c24dd} wydaje się nieco szalone, ale pomyśl jak byś to zrobił korzystając z notatnika czy czegoś w tym rodzaju. Tutaj mamy tylko 6 klawiszy, tylko jeden z nich wciśnięty z shiftem, i nie musisz ani razu sięgać po mysz. Byłby to niesamowicie wydajny sposób na wycięcie 24 linii do nazwanego rejestru, zakładając że akurat wiesz ile linii chcesz skopiować. Bez tej wiedzy, praca włożona w policzenie wierszy bez problemu przeważy wygodę komendy. Przykład ten pozostaje więc w sferze akademickich rozważań, ale jednocześnie otwiera furtkę do wizualnego zaznaczania tekstu do skopiowania/wycięcia.
+\subsection{Zaznaczanie}
+VIM posiada dwa tryby zaznaczania tekstu: wizualny i niewizualny. Istnieje spore prawdopodobieństwo, że będziesz chciał skorzystać z trybu wizualnego do łatwiejszego kopiowania, więc poświęćmy mu chwilę.
+
+\begin{tabular}{ l | p{9,9cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt v} & Zaznaczanie znaków \\
+{\tt V} & Zaznaczanie wierszy \\
+{\tt \^{}v} ({\tt Ctrl+v}) & Zaznaczanie prostokątnego obszaru \\
+{\tt gv} & Ponowne zaznaczenie ostatnio zaznaczonego obszaru \\ \hline
+\end{tabular}\\
+
+\noindent
+Komenda do zaznaczania wizualnego to {\tt v}. Możesz wcisnąć {\tt v}, przejść do (lub wyszukać) końca interesującego Cię obszaru i wykonać polecenie kopiowania ({\tt y}) bądź usuwania ({\tt d}). Tak właściwie powinieneś to zrobić i powrócić. Wciśnij {\tt v} ponownie, żeby opuścić tryb wizualny.\\
+Czasem chcesz zaznaczać całe wiersze od razu. VIM korzysta w tym celu z komendy {\tt V}. Działa ona dokładnie tak jak małe {\tt v}, z tym że zawsze zaznacza całe linie. Oczywiście ponowne wciśnięcie {\tt V} wyłącza tryb zaznaczania wierszy.\\
+Innym razem może się zdarzyć tak, że będziesz chciał zaznaczyć prostokątny obszar zamiast całych wierszy czy ciągu znaków. Żeby wejść do trybu zaznaczania prostokątnego (blokowego), wciśnij {\tt \^{}v} ({\tt Ctrl+v}). Zauważ, że gdy jesteś w trybie wprowadzania, {\tt \^{}v} ma zupełnie inne znaczenie. Niech Cię to nie zdziwi. Wklejanie prostokątnych obszarów to naprawdę świetna funkcja.\\
+Inną fajną rzeczą jest to, że możesz wejść do trybu wizualnego przy pomocy {\tt v}, zaznaczyć kilka znaków, a potem przełączyć się na zaznaczanie wierszy wciskając {\tt V} albo nawet {\tt \^{}v}, żeby zaznaczyć prostokątny obszar.\\
+Po tym jak opuścisz tryb wizualny, obszar, który zaznaczyłeś, nie jest już podświetlony. System pomocy VIM-a podpowiada, że możemy powrócić do poprzedniego trybu zaznaczania z ostatnio zaznaczonym obszarem wydając polecenie gv. Bawiłem się tym trochę i muszę powiedzieć, że jest to całkiem przydatne.\\
+Zaznaczałem cały plik ({\tt ggVG}) i kopiowałem go do systemowego schowka ({\tt \"{}+y}). Potem przełączałem się do edytora bloga i wciskałem standardowe {\tt \^{}a\^{}v}, żeby nadpisać zawartość wpisu tekstem z VIM-a. Teraz mogę oszczędzić kilka uderzeń w klawisze korzystając z {\tt gv} zamiast {\tt ggVG} (po tym jak już wydałem to polecenie).\\
+Zaznaczony obszar staje się kontekstem dla innych komend, więc możesz zrobić dużo więcej niż tylko proste kopiuj-wklej. Możesz wcisnąć {\tt r}, a potem inny znak – na przykład {\tt X}, żeby zamienić wszystkie znaki w zaznaczeniu na {\tt X}. Możesz użyć tego obszaru do wywoływania na nim poleceń (o tym jeszcze nie mówiliśmy). Jest naprawdę sporo możliwości, ale zakończymy w tym miejscu lekcję o zaznaczaniu. \\
+Skoro już i tak to czytasz, to chciałbym przypomnieć, żebyś unikał śmierci przez {\tt CapsLock} i nigdy nie zostawał w trybie wprowadzania bez potrzeby. Nie należy to co prawda do materiału tej lekcji, ale po prostu musiałeś to usłyszeć ponownie.
+\subsection{Uzupełnianie}
+Nie bój się używać długich nazw i wyrazów, bo VIM ma uzupełnianie. Od razu uprzedzam, że to nie jest {\it intellisense}, ale spokojnie sobie poradzi z kończeniem słów za Ciebie. Wpisz wystarczająco dużo znaków, żeby słowo było rozpoznawalne i (bez wychodzenia z trybu wprowadzania) wciśnij {\tt \^{}n}. Jeżeli słowo, którego szukasz znajduje się w którymkolwiek z aktualnie otwartych plików (lub buforów), to VIM zaproponuje Ci najlepsze dopasowanie. Jeżeli to nie będzie słowo, które chciałeś wpisać, po prostu wciskaj {\tt \^{}n} tak długo, aż znajdziesz pasujące słowo albo skończą Ci się dostępne możliwości. Możesz też wcisnąć {\tt \^{}p}, aby powrócić do poprzedniej podpowiedzi.
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt \^{}n} & W trybie wprowadzania – znajdź następne dopasowanie \\
+{\tt \^{}p} & W trybie wprowadzania – znajdź poprzednie dopasowanie \\ \hline
+\end{tabular}\\
+
+\noindent
+W nowszych wersjach GVIM-a (graficznego [{\it i konsolowego VIM-a od wersji 7.0 – dop. tłum.}]) pojawi się lista, z której będziesz mógł wybrać słowo albo wpisując tak dużo liter, aż będzie to jedyne dopasowanie, albo korzystając z klawiszy strzałek {\it [albo \texttt{\textit{\^{}n}} i \texttt{\textit{\^{}p}} – dop. tłum.]}.\\
+Dostępny jest również mechanizm {\it uzupełniania całych wierszy}. Możesz wcisnąć {\tt \^{}x\^{}l} ({\tt Ctrl+x}, {\tt Ctrl+l} – mała litera {\it L}), aby przejść do specjalnego trybu uzupełniania. Dostępne opcje przeglądasz – podobnie jak w przypadku pojedynczych wyrazów – korzystając z {\tt \^{}n} i {\tt \^{}p} oraz klawiszy strzałek (jeżeli Twój VIM je obsługuje). Ponownie, jeżeli korzystasz z graficznego GVIM-a, pojawi się lista wyboru [{\it i ponownie – do konsolowego VIM-a od wersji 7.0 również się to odnosi – dop. tłum.}]. Bywa, że jest to bardziej przydatne niż kopiowanie w starym stylu.\\
+Istnieje również mniej znany mechanizm uzupełniania nazw plików, dostępny przy pomocy {\tt \^{}x\^{}f}. Zazwyczaj z niego nie korzystam, więc potrzebuję ściągi takiej jak ten tutorial w tych rzadkich przypadkach. Mając pod ręką tryb przeglądania plików i wildmenu zazwyczaj nie potrzebuję uzupełniania nazw plików.
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt \^{}x\^{}l} & W trybie wprowadzania – uzupełnianie wierszy \\
+{\tt \^{}n} & Następne dopasowanie \\
+{\tt \^{}n} & Poprzednie dopasowanie \\ \hline
+\end{tabular}\\
+
+\noindent
+Kiedy trafisz już na odpowiednie dopasowanie, po prostu kontynuuj pisanie. Dowolny klawisz inny niż klawisze wyboru ({\tt $\uparrow$/$\downarrow$/\^{}n/\^{}p}) zostanie zaakceptowany jako nowy tekst, zarówno w trybie normalnym, jak i wprowadzania. Jest to nieco nieintuicyjne, ponieważ jesteś przyzwyczajony do zatwierdzania wyboru enterem lub tabulatorem.\\
+Oprócz wymienionych, jest jeszcze kilka specjalnych komend dostępnych tylko w trybie wprowadzania.\\
+Ponieważ jesteś wyposażony w uzupełnianie słów i wierszy, nie masz powodu, żeby używać krótkich i tajemniczych nazw zmiennych. Długie nazwy, które mają sens, są naprawdę wykonalne i wcale nie powoduja znużenia.
+\subsection{Zawsze miej tekst przed oczami}
+Są komendy, do przesuwania bieżącej linii. Programistom VIM-a zapewne zaczynało już brakować liter, więc przypięli je do klawisza {\tt z}.
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt zt} & Ustaw bieżący wiersz u góry ekranu \\
+{\tt zz} & Ustaw bieżący wiersz na środku ekranu \\
+{\tt zb} & Ustaw bieżący wiersz na dole ekranu \\ \hline
+\end{tabular}\\
+
+\noindent
+Możesz również ułatwić sobie zerkanie na kod referencyjny, używając podzielonych okien (ang. {\it split windows}). Załóżmy, że piszesz kod w pliku code.cpp i chcesz na chwilę zajrzeć do code.h.
+
+\begin{tabular}{ l | p{7cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt :split code.h<enter>} & Dzieli okno w poziomie i ładuje plik code.h w nowym oknie \\
+{\tt :vsplit code.h<enter>} & Dzieli okno w pionie i ładuje plik code.h w nowym oknie \\ \hline
+\end{tabular}\\
+
+\noindent
+Kiedy już podzielisz swoje okna, powinieneś wiedzieć jak się między nimi poruszać. Poniżej znajdziesz krótką listę komend (wszystkie podpięte pod {\tt \^{}w}), które Ci w tym pomogą. Zawsze możesz zamknąć okno (nawet podzielone) wykorzystując jedną z metod przedstawionych w rozdziale {\it WYJDŹ} ({\tt :qq}, {\tt ZZ} itd.).
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt j} lub {\tt $\downarrow$} & Przejdź do okna poniżej \\
+{\tt k} lub {\tt $\uparrow$} & Przejdź do okna powyżej \\
+{\tt h} lub {\tt $\leftarrow$} & Przejdź do okna po lewej \\
+{\tt l} lub {\tt $\rightarrow$} & Przejdź do okna po prawej \\ 
+{\tt c} & Zamknij bieżące okno \\
+{\tt o} & Zamknij wszystkie okna, poza bieżącym \\ \hline
+\end{tabular}\\
+
+\noindent
+Wszystkie powyższe komendy muszą zostać poprzedzone kombinacją {\tt \^{}c}. Zajrzyj do {\tt :help CTRL-W}, żeby uzyskać więcej informacji na temat korzystania z okien.
+
+\subsection{Pzeglądarka plików}
+VIM pozwala Ci na zarządzanie plikami i katalogami. Spróbuj. Jest dostępny odpowiedni rozdział w systemie pomocy, a więcej informacji możesz uzyskać wciskając i [{\it gdy już jesteś w trybie przeglądarki – dop. tłum.}]. VIM-owa przeglądarka plików to taki {\it Midnight Commander dla ubogich} albo też całkiem niezły zamiennik dla Eksploratora Windows. Jest całkiem poręczny i mocno polecany. Do działania wymagane jest ustawienie {\tt syntax enable} w pliku .vimrc.
+
+\begin{tabular}{ l | p{10,5cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt o} & Otwórz plik w poziomo podzielonym oknie \\
+{\tt v} & Otwórz plik w pionowo podzielonym oknie \\
+{\tt i} & Przełącza między różnymi trybami wyświetlania listy plików (lista, szczegóły, drzewo) \\
+{\tt s} & Sortuj po kolumnie pod kursorem \\
+{\tt r} & Sortuj w odwrotnej kolejności \\
+{\tt D} & Usuń plik \\
+{\tt d} & Utwórz nowy katalog \\ 
+{\tt enter} & Otwórz plik w bieżącym oknie \\
+{\tt \%} & Utwórz nowy plik w bieżącym katalogu i otwórz go do edycji (zapyta o nazwę) \\ \hline
+\end{tabular}\\
+
+\subsection{Zmiana wcięcia}
+Zapomnij o używaniu taba. Zbyt wiele narzędzi używa standardowych tabów o szerokości 8 znaków. Jeżeli będziesz używał taba, to nawet jeśli zmienisz ustawienie {\tt tabstop}, wiele programów będzie niepoprawnie wyświetlać i drukować Twój kod. Taby umarły, niech żyją wcięcia!\\
+Polecam więc, żebyś ustawił {\tt tabstop} na wartość 8 w pliku .vimrc, a\\ {\tt shiftwidth} na taką wartość, jaką uznasz za odpowiednią. Nie, tak naprawdę nie polecam, a wymagam od Ciebie, żebyś dodał te dwa polecenia do swojego .vimrc. Teraz. Poczekam. Naprawdę\ldots idź to zrobić\ldots
+
+\begin{tabular}{ l | p{8,7cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt set tabstop=8} & Używaj standardowych tabów o szerokości 8 znaków \\
+{\tt set shiftwidth=4} & Używaj 4-znakowych wcięć \\
+{\tt set shiftround} & Zmieniaj wcięcie wyrównując do wartości zmiennej {\tt shiftwidth} \\
+{\tt set autoindent} & Automatycznie ustawiaj wcięcie nowej linii \\ \hline
+\end{tabular}\\
+
+\noindent
+Potrzebujesz również włączonej opcji {\tt autoindent}, żebyś nie musiał ręcznie ustawiać wcięcia za każdym razem jak przejdziesz do nowej linii. Autoindent jest na tyle przydatną opcją, że dołączyłem ją w sekcji o niezbędnych ustawieniach w .vimrc. Jeżeli wykonywałeś polecenia z tego tutoriala, powinieneś mieć ją już włączoną. Nie włączenie jej jest głupotą -- naprawdę chcesz ją mieć.\\
+W trybie komend:
+
+\begin{tabular}{ l | p{10,6cm} } 
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt <} & Przesunięcie w lewo (wymaga polecenia ruchu, działa na całych wierszach)\\
+{\tt >} & Przesunięcie w prawo (wymaga polecenia ruchu, działa na całych wierszach) \\ \hline
+\end{tabular}\\
+
+\noindent
+Jeżeli chcesz przesunąć cały akapit w lewo, to {\tt <\}} jest komendą, której potrzebujesz. Żeby przesunąć 3 wiersze w prawo, użyj {\tt 3>>}. Komendy wcięcia są zgodne ze standardowym wzorem komend VIM-a (dlatego nazywa się on standardowym wzorem). Nie używają buforów.\\
+W trybie wprowadzania/nadpisywania:
+
+\begin{tabular}{ l | p{10,6cm} } 
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt \^{}t} & Zwiększ wcięcie \\
+{\tt \^{}d} & Zmniejsz wcięcie \\ \hline
+\end{tabular}
+\subsection{Sprawdzanie pisowni}
+VIM może również sprawdzać Twoją pisownię. Wprowadź komendę\\{\tt :set spell}, żeby włączyć sprawdzanie pisowni. Możesz również zdefiniować słownik i inne opcje, ale w tym celu odsyłam Cię do {\tt :help spell}.\\
+Nie polecam włączenia tej opcji na stałe. Wiele plików, które będziesz edytował będzie zawierało słowa, których nie znajdziesz w słowniku i może to być nieco denerwujące. Osobiście preferuję przełączanie tej opcji przy pomocy {\tt :set spell} i {\tt :set nospell}.\\
+Bardziej dociekliwi mogą nauczyć się przełączać to ustawienie przy pomocy specjalnych skryptów uruchamianych w momencie ładowania pliku. Reszta może spokojnie to pominąć.\\
+\subsection{Drobne podpowiedzi}
+Istnieją pewne komendy pokazujące informacje w linii stanu lub w przewijalnym widoku. Kiedy potrzebujesz przypomnienia, ale nie chcesz przechodzić do innej części kodu, możesz z nich skorzystać.
+
+\begin{tabular}{ l | p{10,3cm} } 
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt [i} & Pokazuje pierwszy wiersz, w którym pojawiło się słowo pod kursorem \\
+{\tt [I} & Pokazuje wszystkie wiersze, w których pojawiło się słowo pod kursorem \\
+{\tt :g/wzór/} & Pokazuje wszystkie wiersze pasujące do wzoru (wyrażenia regularnego)\\ \hline
+\end{tabular}
+\subsection{Filtrowanie przy pomocy powłoki}
+Jeżeli pracowałeś już z wierszem poleceń, to możliwe, że wiesz jak korzystać z takich programów jak {\it sort} czy {\it grep}, a być może także jak wykonywać różne zadania przy pomocy {\it perla} czy {\it awk}. Wszystkie te programy to swego rodzaju filtry. Wczytują ze standardowego wejścia i zwracają wynik na standardowe wyjście.\\
+Kiedy jesteś w VIM-ie, możesz robić dokładnie te same rzeczy. Niewątpliwie uciążliwe jest zapisanie fragmentu, który chcesz posortować, do pliku, przejście do linii komend, posortowanie tego pliku i załadowanie go z powrotem w miejsce nieposortowanych danych.\\ 
+Co musisz wiedzieć, to to, że cała ta praca jest zbędna. Jeżeli chcesz posortować akapit, wystarczy że ustawisz kursor na jego początku i wciśniesz {\tt !\}sort}, a magia się dokona.\\
+VIM jest napisany tak, że używa filtrów bezpośrednio. Jest to przydatne nie tylko ze względu na mnogość przydatnych filtrów dostarczanych razem z systemami uniksopodobnymi, ale także dlatego, że możesz w prosty sposób pisać swoje własne. Każdy program działający jak filtr, który napiszesz, będzie częścią zarówno Twojego edytora jak i powłoki systemowej. Ma to ogromny wpływ na sposób, w jaki edytujesz pliki. Jest to szczególnie ekscytujące, jeżeli już korzystasz z linii komend jak guru.
+
+\begin{tabular}{ l | p{9,3cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt !!polecenie} & Przefiltruj tylko bieżący wiersz \\
+{\tt !\}polecenie} & Przefiltruj linie od bieżącej do końca akapitu \\
+{\tt !Gpolecenie} & Przefiltruj linie od bieżącej do końca pliku \\
+{\tt :\%!polecenie} & Przefiltruj cały plik \\ \hline
+\end{tabular}
+\subsection{Poprawianie formatowania kodu}
+Możesz zmieniać formatowanie kodu na kilka różnych sposobów. Jeden z nich to filtr powłoki:
+
+\begin{tabular}{ l | p{10,4cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt \%!astyle} & Przeformatuj kod korzystając z programu astyle (Niezły program do poprawy formatowania)\\
+{\tt \%!indent} & Przeformatuj kod korzystając z programu indent (Też dobry program, choć trochę starszy) \\ \hline
+\end{tabular}\newpage
+
+\noindent
+Innym sposobem jest komenda {\tt gq}, która ponownie wykonuje zawijanie wierszy i potrafi poprawnie zawijać komentarze.
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt gqq} & Popraw zawijanie bieżącego wiersza (podwójny skok!)\\
+{\tt gqj} & Popraw zawijanie bieżącego i kolejnego wiersza \\
+{\tt gq\}} & Popraw zawijanie od bieżącego wiersza do końca akapitu \\ \hline
+\end{tabular}\\ 
+
+\noindent
+Możesz również zamienić znaki tabulacji na spacje, żeby u każdego wcięcia wyświetlały się tak samo. Aby to zrobić, ustaw zmienną {\tt tabstop} na odpowiedni poziom wcięcia, włącz ustawienie {\tt expandtab} i wykonaj polecenie {\tt :retab}. Byłoby to zdecydowanie za dużo roboty, gdybym nie miał ustawionych {\tt tabstop} i {\tt expandtab} w domyślnej konfiguracji. Zazwyczaj ustawiam {\tt tabstop}, wykonuję {\tt :retab} i zapisuję plik. Jest to ciąg poleceń, który mogę zmapować pod jakiś klawisz lub zapisać jako makro.\\
+Możesz również sprawić, że edytor będzie zawijał długie linie na bieżąco, zachowując poziom wcięć. Wszystko to ustawiasz przy pomocy opcji {\tt linebreak}, {\tt textwidth} i {\tt autoindent}, o których możesz poczytać w systemie pomocy.\\
+\subsection{Tryb szybkich po prawej (QuickFix) Twoim przyjacielem}
+VIM potrafi uruchomić Twój plik Makefile i poprowadzić Cię przez wszystkie zmienne po kolei. Jeżeli korzystasz z testów jednostkowych jako części procesu budowania, a ich wynik zwracany jest w kompatybilnym formacie, to zostaniesz poprowadzony przez błędnie wykonane testy w taki sposób, jakby to były błędy kompilacji. Podobnie rzecz się ma z wszelkimi narzędziami do sprawdzania stylu, zakładając że zwracają wynik w odpowiednim formacie.\\
+Jeżeli stosujesz technikę rozwoju sterowanego testami (Test Driven Development), to jest to krytyczna funkcja. Mając do dyspozycji tryb {\it QuickFix}, szybko wpadniesz w odpowiedni rytm pracy. Możesz nawet przypisać komendę {\tt :make} pod jeden z klawiszy (patrz: {\tt :help map}), żebyś nie musiał jej ciągle wpisywać. VIM jest pod tym względem dość elastyczny. W osobnej publikacji przedstawię swoje ustawienia VIM-a, nakierowane pod kątem TDD.\\
+Podstawowe komendy trybu QuickFix:
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt :make} & Wykonaj plik Makefile określony przez zmienną makefile \\
+{\tt :cw} & Pokaż okno z błędami kompilacji, jeżeli jakieś wystąpiły \\
+{\tt :cn} & Przejdź do następnego błędu kompilacji \\
+{\tt :cp} & Przejdź do poprzedniego błędu kompilacji \\ \hline
+\end{tabular}\\
+
+\noindent
+Jak zwykle, odsyłam do {\tt :help quickfix} po więcej informacji na temat tego trybu.
+\subsection{Dostęp do stron podręcznika (man)}
+W rozdziale poświęconym plikowi .vimrc zalecałem włączenie funkcji {\tt Man}. Ponieważ wykonywałeś moje polecenia, masz teraz dostęp do stron podręcznika z poziomu VIM-a.
+
+{\tt :Man 5 crontab} otworzy stronę dotyczącą tabeli {\tt cron} w dzielonym oknie. Kursor będzie znajdował się w oknie pomocy, po którym będziesz mógł się poruszać tak jak w przypadku tagów: {\tt \^{}]}, żeby przejść do danego taga, {\tt \^{}t} - żeby powrócić. Kiedy skończysz korzystać z podręcznika, po prostu zamknij okno przez {\tt :q} bądź {\tt ZZ}.\\
+Jeżeli szukasz strony podręcznika na temat czegoś w pliku, który edytujesz, nie musisz wciskać dwukropka i wpisywać słowa {\tt Man}. Wystarczy, że wciśniesz znak lidera ({\tt :help mapleader}) - domyślnie {\tt $\backslash$} - a następnie wielką literę {\it K}, żeby VIM znalazł odpowiednią stronę podręcznika i wyświetlił ją w nowym oknie. Oczywiście jeżeli zmienisz znak lidera, będziesz musiał odpowiednio dostosować poniższe komendy. Funkcja ta jest bardzo przydatna, jeżeli piszesz skrypty powłoki lub korzystasz z API języka C systemu Linux (lub Unix).\\
+
+\begin{tabular}{ l | p{9,7cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt :Man temat} & Wyświetl stronę podręcznika dotyczącą tematu \\
+{\tt $\backslash$K} & Wyświetl stronę podręcznika dla słowa pod kursorem \\ \hline
+\end{tabular}\\
+
+\noindent
+Możesz poprawić przydatność tej funkcji upewniając się, że masz zainstalowane strony podręcznika dla wszystkich narzędzi i bibliotek, z których korzystasz. Albo przynajmniej prosząc administratora swojego systemu, żeby to zrobił. Jeżeli programujesz w perlu i nie masz zainstalowanych odpowiednich stron podręcznika, ta funkcja będzie dla Ciebie bezużyteczna. \\
+\subsection{Ctags pozwoli Ci na profesjonalną nawigację}
+Z całego serca polecam exuberant ctags jako program tagujący, dla niemal każdego języka. Potrafi on szybko przeskanować Twój kod i utworzyć plik {\it tagów}, który mówi VIM-owi wszystko, czego ten potrzebuje, żeby znaleźć odpowiednie symbole w kodzie. Plik tagów zawiera nazwy plików i wyrażenia regularne pozwalające znaleźć odpowiednią linię. Naprawdę nieźle sobie radzi.
+
+\begin{tabular}{ l | p{9,5cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt !ctags -R *} & Uruchamia ctags (najlepiej dodać to do pliku Makefile) \\
+{\tt \^{}]} & Przejdź do definicji terminu znajdującego się pod kursorem (klasy/metody/zmiennej...)\\
+{\tt \^{}t} & Powróć do poprzedniego miejsca\\ \hline
+\end{tabular}
+\subsection{Zakładki}
+VIM pozwala na ustawienie zakładki na wierszu i skakanie od jednej zakładki, do drugiej.
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt mx} & Utwórz zakładkę x w bieżącym wierszu\\
+{\tt 'x} & Skocz do zakładki x\\ \hline
+\end{tabular}\\
+
+\noindent
+Możesz użyć dowolnej litery jako nazwy zakładki, ale jest różnica między wielkimi i małymi literami.\\
+\begin{itemize}
+    \item Małe litery ustawiają zakładkę dla danego pliku, tak że {\tt 'a} w jednym pliku może Cię przenieść w zupełnie inne miejsce niż w innym.
+    \item Wielkie litery ustawiają zakładkę globalną, więc {\tt 'A} przeniesie Cię do pliku i linii, w którym daną zakładkę utworzyłeś. Jest to bardzo przydatne, ale czasem może nie być do końca tym, czego byś chciał, ponieważ plik z zakładką jest ładowany w bieżącym oknie.
+\end{itemize}
+\subsection{Wklejanie w trybie wstawiania}
+W trybie wstawiania nie jesteś ograniczony jedynie do pisania i uzupełniania wierszy. Są też inne komendy, a jedną z nich jest {\tt \^{}r}, która wkleja zawartość rejestru w miejscu kursora.\\
+Załóżmy, że usunąłeś jakieś słowo - powiedzmy {\it kanarek} - i piszesz właśnie w zupełnie innym miejscu dokumentu. Wystarczy teraz, że wciśniesz {\tt \^{}r}, a następnie {\tt \"{}} (cudzysłów, nazwa domyślnego rejestru), żeby wkleić słowo {\it kanarek} w danym miejscu i kontynuować pisanie, pozostając w trybie wstawiania.\\
+Jest to szczególnie przydatne przy operacjach typu {\tt cw}, ponieważ komenda zmiany usuwa bieżące słowo (ładując je do rejestru) i przełącza w tryb wprowadzania. Załóżmy więc, że mój kursor jest umieszczony na słowie {\it kanarek}. Wykonuję następujące operacje:
+
+\begin{tabular}{ l | p{10,5cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt cw} & Usuwa bieżące słowo, umieszcza je w rejestrze {\tt \"{}} i przełącza VIM-a w tryb wstawiania \\
+{\tt <b>} & Wprowadza tekst (jesteśmy w trybie wstawiania). Ten tekst to początek taga HTML oznaczającego tekst wytłuszczony\\ 
+{\tt \^{}r} & Rozpoczyna wklejanie-w-trybie-wprowadzania \\
+{\tt \"{}} & Wkleja zawartość domyślnego rejestru ({\it kanarek}) w aktualnym położeniu kursora\\
+{\tt </b>} & Wprowadza tag zamykający\\ 
+{\tt Escape} & Powraca do trybu komend \\
+{\tt u} & Usuwa tag {\tt <b>} ze słowa {\it kanarek}!\\ \hline
+\end{tabular}\\
+
+\noindent
+Uważaj, bo {\tt .} nie wie o tym, że użyłeś komendy {\tt \^{}r}, więc jeśli przejdziesz do kolejnego słowa i wciśniesz kropkę, to zostanie ono zamienione na słowo {\it kanarek} objęte w tag wytłuszczenia. Jeżeli chcesz wytłuszczać wiele słów, to powinieneś nauczyć się nagrywać i odtwarzać makra - {\tt :help q}
+\subsection{Skracaj!}
+Jeden z najprostszych sposobów, w jaki możesz dostosować swój edytor, to skróty. Dla przykładu, jedną z najczęściej wpisywanych błędnie linijek w języku Python jest ta słynna inwokacja funkcji {\tt main}:
+
+{\tt if \_\_name\_\_ == \"{}\_\_main\_\_\"{}:}
+
+\noindent
+Chciałbym, żeby po wpisaniu słowa {\tt pymain}, edytor wprowadzał tę inwokację za mnie. Banalne:
+
+{\tt :ab pymain if \_\_name\_\_ = \"{}\_\_main\_\_\"{}:}
+
+\noindent
+Teraz za każdym razem, gdy wpiszę dowolny znak spoza alfabetu po słowie pymain, zostanie ono automatycznie rozwinięte. Wszystko czego VIM-owi potrzeba to komenda ab i cały wyraz w trybie wprowdzania. Rozwinięcie jest natychmiastowe i automatyczne, nie trzeba wciskać żadnej kombinacji klawiszy. W rezultacie VIM będzie rozwijał wyrazy nawet wtedy, gdy tego nie chcesz. Za każdym razem, gdy wpiszę pymain, otrzymuję powyższe rozwinięcie; nawet jeżeli wpisałem to przez przypadek. Właściwie muszę intencjonalnie pisać to słowo z błędem, wychodzić z trybu wprowadzania i wracać, żeby je poprawić, bo nie mam innej możliwości wpisania tego słowa.\\
+Mogę dodać to rozwinięcie do mojego .vimrc, o ile oczywiście pominę początkowy dwukropek. Mam w swoim .vimrc już kilka takich rozwinięć, ponieważ dobieram je bardzo starannie.\\
+Zauważyłem, że czasem wpisuję {\it teh} zamiast {\it the}. Jest to proste to naprawienia:
+
+{\tt :ab teh the}
+
+\noindent
+Nigdy nie piszę {\it teh} specjalnie, więc jest to całkiem niezły kandydat do {\it skrócenia}.\\
+Dodając własne skróty dobrze je przemyśl, żebyś nie otrzymywał niechcianych rozwinięć. Jednak dobrze jest uwzględnić częste literówki czy dłuższe fragmenty kodu, które w przeciwnym razie musiałbyś wpisywać ręcznie.
+\subsection{Nagrywaj i odtwarzaj makra}
+W systemie pomocy nazywa się to {\it złożonym powtórzeniem} (ang. {\it complex-repeat}).\\
+Do trybu nagrywania makra przełączasz się wciskając {\tt q}, a następnie nazwę rejestru, do którego makro ma zostać zapisane. Możesz użyć dowolnej litery alfabetu (małej lub wielkiej) oraz cyfr. Oczywiście możesz mieć wszystkie 26 mały liter, 26 wielkich oraz 10 cyfr przypisanych jednocześnie do różnych makr, jeśli taka jest Twoja wola.\\
+Każde klawisz, który naciśniesz zostanie nagrany, aż do ponownego naciśnięcia {\tt q}.\\
+Żeby odtworzyć makro, wciśnij {\tt @} i nazwę rejestru.\\
+Po tym jak odtworzysz dane makro, komenda u będzie je widziała jako jedną operację. Jest to bardzo przydatne, ponieważ makro może wykonywać zmiany w wielu wierszach w całym pliku.\\
+VIM zapamiętuje ostatnie makro, które odtworzyłeś i pozwala Ci na powtórzenie go przy wykorzystaniu {\it podwójnego skoku}. W tym wypadku będzie to {\tt @@}.\\
+Komenda {\tt .} również postrzega makro jako jedną operację. Jest to świetne, bo powyższa lekcja staje się dużo bardziej przydatna. Działa to jakoś tak:
+
+\begin{tabular}{ l | p{10,6cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt qa} & Rozpoczyna nagrywanie makra {\it a}\\
+{\tt cw} & Usuwa bieżące słowo, umieszcza je w rejestrze \"{} i przełącza VIM-a w tryb wstawiania\\
+{\tt <b>} & Wprowadza tekst (jesteśmy w trybie wstawiania). Ten tekst to początek taga HTML oznaczającego tekst wytłuszczony\\
+{\tt \^{}r} & Rozpoczyna wklejanie-w-trybie-wprowadzania\\
+{\tt \"{}} & Wkleja zawartość domyślnego rejestru ({\it kanarek}) w aktualnym położeniu kursora \\
+{\tt </b>} & Wprowadza tag zamykający \\
+{\tt Escape} & Powraca do trybu komend \\
+{\tt q} & Kończy nagrywanie makra\\
+{\tt W} & Przechodzi do kolejnego słowa \\
+{\tt @@} & Odtwarza makro, obejmując słowo w tag wytłuszczenia \\
+{\tt W} & Przechodzi do kolejnego słowa\\
+{\tt .} & Ponownie odtwarza makro\\ \hline
+\end{tabular}\\
+
+\noindent
+Makro, które nagrałeś, to po prostu tekst w rejestrze. Możesz je wkleić do dokumentu, usprawnić jego działanie, skopiować z powrotem do rejestru, etc. \\Makra to niezły sposób na usprawnienie skomplikowanych zmian.\\
+Wpisz {\tt :help q}, żeby dowiedzieć się więcej o używaniu makr. Nie powiedziałem wszystkiego.
+\subsection{Mapowanie klawiszy}
+Wszystko, co możesz zrobić ręcznie lub przy pomocy makra, możesz również zmapować pod jakiś klawisz. Mapowanie po prostu podpina makro pod dany klawisz. Na przykład:
+
+{\tt \"{}} Przełączanie pomiędzy plikami na długiej liście {\tt map <F3> :prev<CR> map <F4> :next<CR>}
+
+\noindent
+Poczytaj więcej o mapowaniu wpisując {\tt :help map}.
+\subsection{Kolory i inne takie}
+VIM-a ma niesamowite możliwości dostosowania, włącznie z kolorami, których używa. Niektórzy udostępniają swoje schematy kolorów w Internecie, a kilka jest również dostarczanych wraz ze standardową dystrybucją. Ten, który najczęściej spotykasz to zapewne {\it default} (ang. {\it domyślny}). Jeżeli korzystasz z osobnego schematu kolorów, możesz go podejrzeć korzystając z komendy:
+
+{\tt :echo g:colors\_name}
+
+\noindent
+Wypróbuj istniejące schematy, takie jak {\it delek, darkblue, desert, koehler, elflord, peachpuff}, czy {\it slate}. Zawsze możesz powrócić do domyślnego albo po prostu opuścić edytor i włączyć go ponownie. Komenda, której potrzebujesz to:
+
+{\tt :colorscheme nazwa\_schematu}
+
+\noindent
+Możesz przejrzeć dostępne schematy w trybie przeglądarki wpisując:
+
+{\tt :e \$VIM/vim73/colors}
+
+\noindent
+(Zakładając, że używasz VIM-a 7.3. Możliwe, że będziesz musiał dostosować tę komendę do swojej wersji.)\\
+Schematy kolorów zbudowane są z komend, które ustawiają poszczególne elementy, takie jak kolor tekstu czy tła linii stanu. Możesz się naprawdę wiele nauczyć analizując jeden czy dwa takie schematy.\\
+Komendy kolorów zaczynają się od {\tt hi} (skrót od highlight), po którym następuje nazwa elementu, który chcesz pokolorować (zwana nazwą grupy), oraz łańcuchy znaków odpowiadająće kolorom do użycia odpowiednio w: zwykłym terminalu (spytaj ojca) - {\it term}, kolorowym terminalu - {\it cterm} i wreszcie w graficznym interfejsie - {\it gui}.\\
+Poniżej znajdziesz kilka ustawień, które lubię w gvimie:
+
+{\tt hi LineNr guibg=lightgray guifg=black}
+
+{\tt hi StatusLine guifg=yellow guifg=darkblue}
+
+{\tt hi NonText guibg=darkgray hi ToDo guifg=DarkRed}
+
+\noindent
+Kolorują one obszar, który znajduje się poza tekstem, kolumnę numerów linii po lewej stronie (jeśli wykonasz {\tt set nu}) i koloruje aktywny pasek stanu odmiennie od nieaktywnego.\\
+Po więcej informacji na temat schematów kolorów odsyłam do wbudowanej pomocy ({\tt :help hi}) lub do jakiegoś innego, bardziej rozbudowanego przewodnika po VIM-ie.
+\subsection{Wykorzystywanie ścieżki (ang. {\it path})}
+Istnieje specjalna zmienna, zwana {\tt path}, która pomoże Ci odnaleźć pliki, do których odwołują się aktualnie przez Ciebie edytowane. Jest to szczególnie przydatne, gdy piszesz program w języku C i skierujesz zmienną path na katalogi {\tt /usr/include/*}.\\
+Wartość, którą przyjmuje ta zmienna, to lista ścieżek rozdzielonych przecinkami, w których VIM powinien szukać plików. Pozwala to na wskazanie standardowych katalogów plików dołączanych, jak również plików Twojego projektu czy dowolnych innych, które uznasz za przydatne.\\
+Żeby skorzystać z tej funkcji, umieść kursor na nazwie pliku i (w trybie komend) wciśnij {\tt gf} lub {\tt\^{}wf}. Plik zostanie załadowany w aktualnym oknie.
+
+\begin{tabular}{ p{4cm} | p{8,2cm} }
+{\bf Polecenie} & {\bf Rezultat} \\ \hline
+{\tt set path=., .*, /usr/include/*, /usr/share/*} & Prawdopodobnie nadmiarowe, ale ustawia zmienną path na przeszukiwanie praktycznie wszystkiego - może zająć trochę czasu. \\
+{\tt gf} & Przejdź do pliku (ang. {\it Goto File}): otwiera plik, którego nazwa znajduje się pod kursorem. \\
+{\tt \^{}wf} & Otwórz w oknie (ang. {\it Window File}): podobne do {\tt gf} z tym, że otwiera plik w nowym oknie.\\
+{\tt :e\#} &	Powraca do poprzedniego pliku\\ \hline
+\end{tabular}\\
+
+\noindent
+Uważam, że otwieranie w nowym oknie jest generalnie bardziej przydatne, ale jednocześnie {\tt gf} jest na tyle łatwiejsze do wpisania, że używam go częściej. Chciałbym, żeby kolejne edytowane pliki były odkładane na stosie, żeby można było do nich powracać przy pomocy {\tt \^{}t}, ale niestety tak nie jest. Można to obejść ustawiając zakładkę nazwaną wielką literą, żeby można było do niej powrócić z innego pliku. Wiem, że brzmi to nieco okropnie, bo takie jest, ale przynajmniej działa.\\
+Mimo wszystko, programiście C/C++, {tt $\backslash$K}  w połączeniu z {\tt \^{}wf} pozwala na całkiem niezłe poruszanie się między plikami, a zakładki są przydatne do przechodzenia z/do plików nagłówkowych i innych.\\
+Zmienna {\tt path} jest również wykorzystywana przez mechanizm uzupełniania ({\tt \^{}n}) do znajdywania plików, w których szuka dopełnień.\newpage
+\pagestyle{empty}
+\AddToShipoutPicture*{\put(0,0){\includegraphics{/home/marcin/reklama4.jpg}}}%
+\phantom{Invisible, but important} 
+\end{document}
