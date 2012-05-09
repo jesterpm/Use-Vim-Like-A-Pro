@@ -387,49 +387,69 @@ Feel free to use long names and big words, because VIM has completion. It's not 
 In newer version of GVIM (graphical version) a selection box will pop up, and you will pick your word by either typing a little more so it really is unique or else by using arrow keys.\\
 There is a more comprehensive \textit{whole line completion} mechanism available to you also. You can press \texttt{\^{}x\^{}l} to enter a special completion mode. You cycle through choices with ^n for next and ^p for previous, or with arrows (if your vim supports them). Again, if you are using GVIM you will get a popup window with choices. There are times this is more useful than doing cut-and-paste the old-fashioned way.
 
-      Less well known, there is a filename completion mechanism, accessed with ^x ^f. I don't usually use this, and have to keep a note like this tutorial around for the few times that I do. Usually having the file explorer mode and wildmenu around means not having to do filename completion in a normal day.
+Less well known, there is a filename completion mechanism, accessed with ^x ^f. I don't usually use this, and have to keep a note like this tutorial around for the few times that I do. Usually having the file explorer mode and wildmenu around means not having to do filename completion in a normal day.
 
-      ^x^l	In insert mode, complete a line
-      ^n	Get next choice
-      ^p	Get previous choice
+\begin{tabular}{ l | p{8cm} }
+  \textbf{Command} & \textbf{Result}\\ \hline
+      ^x^l  & In insert mode, complete a line\\ \hline
+      ^n	& Get next choice\\
+      ^p	& Get previous choice\\ \hline
+\end{tabular}\\
 
-      When you have your selection, just keep typing. Any key other than a selection key (up/down/^n/^p) will be accepted as new text as is normal in insert mode. This is a little counter-intuitive because you are accustomed to hitting enter or tab to accept the entry.
+When you have your selection, just keep typing. Any key other than a selection key (up/down/^n/^p) will be accepted as new text as is normal in insert mode. This is a little counter-intuitive because you are accustomed to hitting enter or tab to accept the entry.
 
-      There are a number of other special commands which are only available in insert mode.
+There are a number of other special commands which are only available in insert mode.
 
-      Since you have word-completion and line-completion, you have no excuse for writing short and cryptic variable names. Very long, meaningful names are quite feasible and not tedious at all.
-  22. Keep text in front of your face
+Since you have word-completion and line-completion, you have no excuse for writing short and cryptic variable names. Very long, meaningful names are quite feasible and not tedious at all.
+\subsection{Keep text in front of your face}
+\label{"Keep text in front of your face"}
+There are commands for moving the current line. The VIM folks were running out of letters I think, so they attached these commands to the z key.
 
-      There are commands for moving the current line. The VIM folks were running out of letters I think, so they attached these commands to the z key.
-      zt	move current line to top of page
-      zz	move current line to middle of page
-      zb	move current line to bottom of page
+\begin{tabular}{ l | p{8cm} }
+  \textbf{Command} & \textbf{Result}\\ \hline
+      zt	& move current line to top of page \\
+      zz	& move current line to middle of page \\
+      zb	& move current line to bottom of page \\ \hline
+\end{tabular}\\
 
-      You also can do much to keep reference code in front of your face if you use split windows. Lets assume your are in code.cpp, and want to look at code.h for a while.
-      type	effect
-      :split code.h<enter>	splits window horizontally and loads code.h in a new window
-      :vsplit code.h<enter>	splits window vertically and loads code.h in a new window
+You also can do much to keep reference code in front of your face if you use split windows. Lets assume your are in code.cpp, and want to look at code.h for a while.
 
-      Once you have split windows, you'll want to know how to move between them. Here is a small set of commands (all bound up in ^w sequences) that will help you move about. You can always close any window (even a split one) with the :q or ZZ tricks (from "GET OUT", far above).
-      ^W followed by	Effect
-      j or leftarrow	Move to next window to the left
-      l or rightarrow	Move to next window to the right
-      k or uparrow	Move to window above current window
-      j or downarrow	Move to window below current window
-      c	Close current window
-      o	Close all windows except the current window
-      Check out :help CTRL-W for more information about window control and movement.
-  23. The Explorer
+\begin{tabular}{ l | p{8cm} }
+  \textbf{Type} & \textbf{Effect}\\ \hline
+      :split code.h<enter>  & splits window horizontally and loads code.h in a new window\\
+      :vsplit code.h<enter> & splits window vertically and loads code.h in a new window\\ \hline
+\end{tabular}\\
 
-      You can edit directories. Give it a shot. There is help available, and you can get more information on the screen by pressing i. This is a kind of "poor man's midnight commander", or maybe a reasonable substitute for the windows explorer. It's quite handy, and highly recommended. This only works if "syntax enable" is in your .gvimrc file.
-      o	Open file in a (horizontal) split window	
-      v	Open file in a (vertical) split window	
-      i	show more info	
-      s	sort by column under the cursor	
-      r	sort in reverse order	
-      D	delete file	
-      d	make new directory	
-      enter	Open file in current window.
+% TODO: Cross reference GET OUT
+Once you have split windows, you'll want to know how to move between them. Here is a small set of commands (all bound up in ^w sequences) that will help you move about. You can always close any window (even a split one) with the :q or ZZ tricks (from "GET OUT", far above).
+
+\begin{tabular}{ l | p{8cm} }
+  \textbf{^W followed by} & \textbf{Effect}\\ \hline
+      j or leftarrow	  & Move to next window to the left\\
+      l or rightarrow	  & Move to next window to the right\\
+      k or uparrow	      & Move to window above current window\\
+      j or downarrow	  & Move to window below current window\\
+      c	Close             & current window\\
+      o	Close all windows & except the current window\\ \hline
+\end{tabular}\\
+
+Check out :help CTRL-W for more information about window control and movement.
+\subsection{The Explorer}
+\label{The Explorer}
+
+You can edit directories. Give it a shot. There is help available, and you can get more information on the screen by pressing i. This is a kind of "poor man's midnight commander", or maybe a reasonable substitute for the windows explorer. It's quite handy, and highly recommended. This only works if "syntax enable" is in your .gvimrc file.
+
+\begin{tabular}{ l | p{8cm} }
+  \textbf{Command} & \textbf{Result}\\ \hline
+      o	     & Open file in a (horizontal) split window\\
+      v	     & Open file in a (vertical) split window \\
+      i	     & show more info \\
+      s	     & sort by column under the cursor\\
+      r	     & sort in reverse order\\
+      D	     & delete file\\
+      d	     & make new directory\\
+      enter	 & Open file in current window.\\
+\end{tabular}\\
       	
   24. Indenting and unindenting
 
