@@ -376,7 +376,7 @@ The marked area becomes a context for other commands, so you can do much more th
 And since you're reading this anyway I want to remind you to avoid death by caps, and never park in insert mode. It doesn't belong here, but you need to hear it again.
 \subsection{Completion}
 \label{"Completion"}
-Feel free to use long names and big words, because VIM has completion. It's not intellisense, mind you, but it will finish your words for you. Type enough of a word to be unique, and (without leaving insert mode) press \texttt{\^{}n}. If the word you're looking for is in any of the loaded files (or buffers) then VIM will present its best guess. If it is not the one you want, press ^n again until either you find your word, or you run out of choices. You can also use \texttt{\^{}p} to go back to a previous selection.
+Feel free to use long names and big words, because VIM has completion. It's not intellisense, mind you, but it will finish your words for you. Type enough of a word to be unique, and (without leaving insert mode) press \texttt{\^{}n}. If the word you're looking for is in any of the loaded files (or buffers) then VIM will present its best guess. If it is not the one you want, press \texttt{\^{}n} again until either you find your word, or you run out of choices. You can also use \texttt{\^{}p} to go back to a previous selection.
 
 \begin{tabular}{ l | p{8cm} }
   \textbf{Command} & \textbf{Result}\\ \hline
@@ -385,18 +385,18 @@ Feel free to use long names and big words, because VIM has completion. It's not 
 \end{tabular}\\
 
 In newer version of GVIM (graphical version) a selection box will pop up, and you will pick your word by either typing a little more so it really is unique or else by using arrow keys.\\
-There is a more comprehensive \textit{whole line completion} mechanism available to you also. You can press \texttt{\^{}x\^{}l} to enter a special completion mode. You cycle through choices with ^n for next and ^p for previous, or with arrows (if your vim supports them). Again, if you are using GVIM you will get a popup window with choices. There are times this is more useful than doing cut-and-paste the old-fashioned way.
+There is a more comprehensive \textit{whole line completion} mechanism available to you also. You can press \texttt{\^{}x\^{}l} to enter a special completion mode. You cycle through choices with \texttt{\^{}n} for next and \texttt{\^{}p} for previous, or with arrows (if your vim supports them). Again, if you are using GVIM you will get a popup window with choices. There are times this is more useful than doing cut-and-paste the old-fashioned way.
 
-Less well known, there is a filename completion mechanism, accessed with ^x ^f. I don't usually use this, and have to keep a note like this tutorial around for the few times that I do. Usually having the file explorer mode and wildmenu around means not having to do filename completion in a normal day.
+Less well known, there is a filename completion mechanism, accessed with \texttt{\^{}x} \texttt{\^{}f}. I don't usually use this, and have to keep a note like this tutorial around for the few times that I do. Usually having the file explorer mode and wildmenu around means not having to do filename completion in a normal day.
 
 \begin{tabular}{ l | p{8cm} }
   \textbf{Command} & \textbf{Result}\\ \hline
-      ^x^l  & In insert mode, complete a line\\ \hline
-      ^n	& Get next choice\\
-      ^p	& Get previous choice\\ \hline
+      \texttt{\^{}x}\texttt{\^{}l}  & In insert mode, complete a line\\ \hline
+      \texttt{\^{}n}	& Get next choice\\
+      \texttt{\^{}p}	& Get previous choice\\ \hline
 \end{tabular}\\
 
-When you have your selection, just keep typing. Any key other than a selection key (up/down/^n/^p) will be accepted as new text as is normal in insert mode. This is a little counter-intuitive because you are accustomed to hitting enter or tab to accept the entry.
+When you have your selection, just keep typing. Any key other than a selection key (up/down/\texttt{\^{}n}/\texttt{\^{}p}) will be accepted as new text as is normal in insert mode. This is a little counter-intuitive because you are accustomed to hitting enter or tab to accept the entry.
 
 There are a number of other special commands which are only available in insert mode.
 
@@ -421,10 +421,10 @@ You also can do much to keep reference code in front of your face if you use spl
 \end{tabular}\\
 
 % TODO: Cross reference GET OUT
-Once you have split windows, you'll want to know how to move between them. Here is a small set of commands (all bound up in ^w sequences) that will help you move about. You can always close any window (even a split one) with the :q or ZZ tricks (from "GET OUT", far above).
+Once you have split windows, you'll want to know how to move between them. Here is a small set of commands (all bound up in \texttt{\^{}w} sequences) that will help you move about. You can always close any window (even a split one) with the :q or ZZ tricks (from "GET OUT", far above).
 
 \begin{tabular}{ l | p{8cm} }
-  \textbf{^W followed by} & \textbf{Effect}\\ \hline
+  \textbf{\texttt{\^{}W} followed by} & \textbf{Effect}\\ \hline
       j or leftarrow	  & Move to next window to the left\\
       l or rightarrow	  & Move to next window to the right\\
       k or uparrow	      & Move to window above current window\\
@@ -470,8 +470,8 @@ You can edit directories. Give it a shot. There is help available, and you can g
       If you want to move a paragraph to the left, then <} is your command. For shifting three lines right, it would be 3>>. The shift commands follow the standard VIM command pattern (hence the term "standard"). They do not use a buffer.
 
       In INSERT or OVERTYPE mode:
-      ^T	Indent	
-      ^D	Dedent/unindent	
+      \texttt{\^{}T}	Indent	
+      \texttt{\^{}D}	Dedent/unindent	
   25. Spelling
 
       VIM can also check your spelling. You can enter the command :set spell to turn on spelling checker. You can also set the dictionary and other options, but :help spell will tell you all about it.
@@ -529,7 +529,7 @@ You can edit directories. Give it a shot. There is help available, and you can g
 
       In the .vimrc section I recommended that you turn on the Man feature. since you followed those instructions, you can now access man pages from VIM
 
-      :Man 5 crontab shows you the crontab man page in a split window. Your cursor will be in the help window where you can navigate as you would with tags, using ^] to go to a tag, and ^t to return. When you are done, type :q or ZZ to quit the window.
+      :Man 5 crontab shows you the crontab man page in a split window. Your cursor will be in the help window where you can navigate as you would with tags, using \texttt{\^{}]} to go to a tag, and \texttt{\^{}t} to return. When you are done, type :q or ZZ to quit the window.
 
       If you are looking for a man page for something in your file, you don't have to type the colon and the word man. You can type the leader character (by default "\") and the capital K and vim will find the man page and display it in a split window. By the way, if you change the leader character, you will of course have to adjust these instructions. This is very handy when you are working with scripts or the Linux/Unix C API.
 
@@ -541,8 +541,8 @@ You can edit directories. Give it a shot. There is help available, and you can g
 
       I heartily recommend exuberant ctags as the tag program for almost any language. It will quickly span your code and create a 'tags' file, which tells vim all it needs to know to find a symbol in your source. The tag file gives a file and also a regular expression for finding the line you need. It does a very fine job.
       !ctags -R *	Run ctags (better to do this in your makefile)
-      ^]	Jump to the definition of the term (class/method/var) under the cursor
-      ^t	Pop the browsing stack, return to previous location
+      \texttt{\^{}]}	Jump to the definition of the term (class/method/var) under the cursor
+      \texttt{\^{}t}	Pop the browsing stack, return to previous location
   32. Bookmarks.
 
       Vim allows you to set a bookmark on a line, and jump from one bookmark to another.
@@ -556,21 +556,21 @@ You can edit directories. Give it a shot. There is help available, and you can g
 
   33. Pasting in Insert Mode
 
-      When in insert mode, you're not just stuck with typing characters and doing line completion. There are other commands, and one of them is the ^r command which will read data from a register and type it for you.
+      When in insert mode, you're not just stuck with typing characters and doing line completion. There are other commands, and one of them is the \texttt{\^{}r} command which will read data from a register and type it for you.
 
-      If you last deleted the word falsify and are typing in some part of the document, you can type ^r, followed by the default register named " (doublequote) and the editor will paste the word "falsify" into the text and continue onward in insert mode.
+      If you last deleted the word falsify and are typing in some part of the document, you can type \texttt{\^{}r}, followed by the default register named " (doublequote) and the editor will paste the word "falsify" into the text and continue onward in insert mode.
 
       This is particularly helpful when doing something like cw, because the change command will delete the current word (loading the buffer) and then enter insert mode. So say I place my cursor on the word falsify above:
       Command	Effect
       cw	deletes the current word to register ", and enter insert mode
       <b>	enters the text (we're in insert mode). This text is the beginning of the html tag for bold text.
-      ^r	start the paste-while-in insert mode
+      \texttt{\^{}r}	start the paste-while-in insert mode
       "	paste from register ' ("falsify") into the current location in the file.
       </b>	enter the closing tag fror bold
       ESC	Return to command mode.
       u	Removes the <b> tag from "falsify"!
 
-      Be warned, the '.' command doesn't see that you used the ^R command, so if you move to the next word and hit '.', vim will change that word to be be the bold-tagged "falsify", too. If you want to bold a bunch of different words, you should learn how to record and playback macros (:help q).
+      Be warned, the '.' command doesn't see that you used the \texttt{\^{}R} command, so if you move to the next word and hit '.', vim will change that word to be be the bold-tagged "falsify", too. If you want to bold a bunch of different words, you should learn how to record and playback macros (:help q).
   34. Abbreviate!
 
       One of the easiest ways to customize your editor is with abbreviations. For instance, of the most commonly mistyped python lines is the famous "main" invocation:
@@ -612,7 +612,7 @@ You can edit directories. Give it a shot. There is help available, and you can g
       qa	Start recording the macro to register 'a'
       cw	deletes the current word to register ", and enter insert mode
       <b>	enters the text (we're in insert mode). This text is the beginning of the html tag for bold text.
-      ^r	start the paste-while-in insert mode
+      \texttt{\^{}r}	start the paste-while-in insert mode
       "	paste from register ' ("falsify") into the current location in the file.
       </b>	enter the closing tag fror bold
       ESC	Return to command mode.
@@ -671,18 +671,18 @@ You can edit directories. Give it a shot. There is help available, and you can g
 
       The value you provide for path is a comma-separated list of paths where files can be found. This allows you to point to the standard include, and your project includes, and any other dirs you find useful.
 
-      To use this feature, place the cursor on the name of a file, and (while in normal/control mode) type gf or ^wf. The file will be loaded into the current window.
+      To use this feature, place the cursor on the name of a file, and (while in normal/control mode) type gf or \texttt{\^{}w}f. The file will be loaded into the current window.
       set path=.,.**,/usr/include/**,/usr/share/**	Probably excessive, but sets the path to find just about anything. May take a long time.
       gf	Goto File: Get the file whose name is under the cursor
-      ^Wf	Window File: Same as gf except opens the file in a new window
+      \texttt{\^{}W}f	Window File: Same as gf except opens the file in a new window
       :e#	Return to the previous window
 
-      I find the window version more useful generally, but I find the non-window version so much easier to type that I will use it instead. I wish that the file navigation would add to the tag stack, so that ^t would return you to the previous file, but no. Stefan Berglund informs me that the ^o will, however. Now it is much easier to jump backward through the jump list.
+      I find the window version more useful generally, but I find the non-window version so much easier to type that I will use it instead. I wish that the file navigation would add to the tag stack, so that \texttt{\^{}t} would return you to the previous file, but no. Stefan Berglund informs me that the \texttt{\^{}o} will, however. Now it is much easier to jump backward through the jump list.
 
       The other workaround is to set a bookmark as a capital letter so that you can do a return to it from another file. I know that sounds a little awful, and it is a little awful, but it works.
 
-      Still, for C/C++ programmers, the combination of \K and ^wf allows a lot of file navigation, and the bookmarks are handy for getting in/out of header files and the like.
+      Still, for C/C++ programmers, the combination of \K and \texttt{\^{}w}f allows a lot of file navigation, and the bookmarks are handy for getting in/out of header files and the like.
 
-      The path is also used by the name completion (^n) system to find the files in which it will search for word completions.
+      The path is also used by the name completion (\texttt{\^{}n}) system to find the files in which it will search for word completions.
 
 \end{document}
